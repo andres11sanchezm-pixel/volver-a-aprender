@@ -3655,25 +3655,6 @@
 
 
   <script>
-    // TYPEWRITER ANIMATION FOR HERO TITLE
-    (function initTypewriter() {
-      const target = document.getElementById('typewriterText');
-      if (!target) return;
-      const fullText = "sin perder tu autonomía ni tus notas.";
-      let charIndex = 0;
-      target.textContent = "";
-
-      function typeChar() {
-        if (charIndex < fullText.length) {
-          target.textContent += fullText.charAt(charIndex);
-          charIndex++;
-          const delay = Math.floor(Math.random() * 30) + 40;
-          setTimeout(typeChar, delay);
-        }
-      }
-      setTimeout(typeChar, 350);
-    })();
-
     function handleHeroAccess() {
       const profile = readStoredJSON('studentProfile', null);
       if (profile && profile.name) {
