@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Estudiante | Volver a Aprender 9°</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --accent-purple: #a855f7;
+      --accent-cyan: #38bdf8;
+      --bg-dark: #030014;
+      --bg-card: #0c0a1d;
+      --text-main: #f1f0ff;
+      --text-muted: #a5a2c8;
+      --border-color: rgba(99, 102, 241, 0.22);
+      --radius-md: 18px;
+      --radius-lg: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.2), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.18), transparent 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* BACKGROUND ORBS */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 { width: 450px; height: 450px; top: -100px; left: -100px; background: rgba(99, 102, 241, 0.25); animation: float1 14s infinite alternate ease-in-out; }
+    .orb-2 { width: 400px; height: 400px; bottom: -80px; right: -80px; background: rgba(168, 85, 247, 0.22); animation: float2 16s infinite alternate ease-in-out; }
+    @keyframes float1 { 0% { transform: translate(0, 0); } 100% { transform: translate(60px, 40px); } }
+    @keyframes float2 { 0% { transform: translate(0, 0); } 100% { transform: translate(-50px, -50px); } }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(3, 0, 20, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.9rem 1.5rem;
+    }
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: white;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; font-weight: 900;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    }
+    .logo-text h1 { font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 800; line-height: 1.1; }
+    .logo-text span { font-size: 0.72rem; color: var(--primary-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.65rem 1.35rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; text-decoration: none; transition: all 0.25s ease; border: none;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05); color: white;
+      border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover { background: rgba(99, 102, 241, 0.15); border-color: var(--primary-light); transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #818cf8, #a855f7);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1150px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .register-card {
+      background: rgba(12, 10, 29, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.15);
+      animation: cardFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes cardFadeUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .register-header {
+      margin-bottom: 1.75rem;
+    }
+    .reg-tag {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.85rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 700;
+      color: var(--primary-light); background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3); margin-bottom: 0.75rem;
+    }
+    .register-header h2 {
+      font-size: 2rem; font-family: 'Outfit', sans-serif; font-weight: 800; line-height: 1.15;
+    }
+    .register-header p {
+      color: var(--text-muted); font-size: 0.92rem; margin-top: 0.4rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+    .form-group label {
+      display: block; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; margin-bottom: 0.35rem;
+    }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .form-control {
+      width: 100%; padding: 0.75rem 1rem; border-radius: 12px;
+      background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.25);
+      color: white; font-size: 0.92rem; font-family: inherit; outline: none;
+      transition: all 0.2s ease;
+    }
+    .form-control:focus {
+      border-color: var(--primary-light); box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+    }
+    select.form-control { cursor: pointer; }
+    select.form-control option { background: #0c0a1d; color: white; }
+
+    /* PREVIEW CARD & PERKS (RIGHT SIDE) */
+    .preview-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      animation: cardFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .student-badge-preview {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.9), rgba(15, 23, 42, 0.95));
+      border: 1px solid rgba(129, 140, 248, 0.4);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(99, 102, 241, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .student-badge-preview::after {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(168, 85, 247, 0.25) 60deg, transparent 120deg);
+      animation: badgeBeam 8s linear infinite; pointer-events: none;
+    }
+    @keyframes badgeBeam { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .badge-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1.25rem; position: relative; z-index: 1;
+    }
+    .badge-name { font-size: 1.4rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: white; }
+    .badge-school { font-size: 0.85rem; color: var(--primary-light); font-weight: 600; margin-top: 0.15rem; }
+    .badge-icon { font-size: 2.2rem; }
+
+    .badge-details {
+      display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 0.85rem;
+      position: relative; z-index: 1;
+    }
+    .badge-status {
+      margin-top: 0.85rem; font-size: 0.78rem; color: #34d399; font-weight: 800;
+      letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;
+      position: relative; z-index: 1;
+    }
+
+    .perks-card {
+      background: rgba(12, 10, 29, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+    }
+    .perks-card h4 { font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 0.85rem; }
+    .perks-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.88rem; color: #cbd5e1; }
+    .perks-list li { display: flex; align-items: center; gap: 0.6rem; }
+
+    /* TOAST */
+    .toast {
+      position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 9999;
+      background: #0f172a; border: 1px solid #818cf8; border-radius: 14px;
+      padding: 1rem 1.25rem; color: white; box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+      transform: translateY(120px); opacity: 0; transition: all 0.3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 860px) {
+      main { grid-template-columns: 1fr; margin-top: 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-box">
+        <div class="logo-badge">9°</div>
+        <div class="logo-text">
+          <h1>Volver a Aprender</h1>
+          <span>IA Estratégica Colombia</span>
+        </div>
+      </a>
+      <div style="display:flex; gap:0.75rem;">
+        <a href="index.html" class="btn btn-secondary">🏠 Inicio</a>
+        <a href="panel.html" class="btn btn-secondary">🔑 Iniciar Sesión</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- FORMULARIO DE REGISTRO -->
+    <div class="register-card">
+      <div class="register-header">
+        <div class="reg-tag">🇨🇴 Inscripción Grado 9° Oficial</div>
+        <h2>Crea tu Perfil de Estudiante</h2>
+        <p>Activa tu carné virtual y accede a tu panel personal de módulos y tareas con IA.</p>
+      </div>
+
+      <form id="registrationForm" onsubmit="handleRegistrationSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre Completo *</label>
+            <input type="text" class="form-control" id="regName" placeholder="Ej: Santiago Gómez" required oninput="updateBadgePreview()">
+          </div>
+          <div class="form-group">
+            <label>¿Cómo te gusta que te llamen?</label>
+            <input type="text" class="form-control" id="regNickname" placeholder="Ej: Santi" oninput="updateBadgePreview()">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Colegio / Institución Educativa *</label>
+            <input type="text" class="form-control" id="regSchool" placeholder="Ej: I.E. Concejo de Medellín" required oninput="updateBadgePreview()">
+          </div>
+          <div class="form-group">
+            <label>Ciudad o Municipio (Colombia) *</label>
+            <input type="text" class="form-control" id="regCity" placeholder="Ej: Medellín" required oninput="updateBadgePreview()">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Materia donde más necesitas mejorar en 9° *</label>
+          <select class="form-control" id="regSubject" required onchange="updateBadgePreview()">
+            <option value="Matemáticas y Álgebra">📐 Matemáticas y Álgebra (Factorización, funciones)</option>
+            <option value="Español y Ensayos">📖 Español y Ensayos (Lectura Crítica)</option>
+            <option value="Ciencias Naturales">🧪 Ciencias Naturales (Química, genética)</option>
+            <option value="Sociales y Ciudadanas">🏛️ Ciencias Sociales (Historia de Colombia)</option>
+            <option value="Inglés">🗣️ Inglés Comunicativo</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Correo Electrónico *</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="tu.correo@estudiante.edu.co" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp (Opcional tutoría)</label>
+            <input type="tel" class="form-control" id="regWhatsapp" placeholder="300 123 4567">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tu mayor desafío actual con las tareas y la IA</label>
+          <input type="text" class="form-control" id="regChallenge" placeholder="Ej: Me cuesta empezar a redactar o memorizar fórmulas...">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; padding:0.85rem; font-size:1rem; margin-top:0.5rem;">
+          🚀 Guardar Registro y Abrir Mi Panel ➔
+        </button>
+      </form>
+    </div>
+
+    <!-- PREVIEW DEL CARNÉ VIRTUAL -->
+    <div class="preview-column">
+      <div class="student-badge-preview">
+        <div class="badge-top">
+          <div>
+            <div class="badge-name" id="previewName">Tu Nombre Aquí</div>
+            <div class="badge-school" id="previewSchool">Tu Institución Educativa • Grado 9°</div>
+          </div>
+          <div class="badge-icon">🎖️</div>
+        </div>
+        <div class="badge-details">
+          <span>Materia clave: <strong id="previewSubject" style="color:white;">Matemáticas y Álgebra</strong></span>
+          <span id="previewCity" style="color:#818cf8;">Colombia</span>
+        </div>
+        <div class="badge-status">
+          <span>✔</span> ESTUDIANTE ESTRATEGA REGISTRADO 2026
+        </div>
+      </div>
+
+      <div class="perks-card">
+        <h4>Beneficios incluidos al registrarte:</h4>
+        <ul class="perks-list">
+          <li><span>⭐</span> Acceso al panel de control de los 6 módulos del curso.</li>
+          <li><span>📊</span> Constructor interactivo de Roadmap (Tareas con y sin IA).</li>
+          <li><span>💬</span> Opción de consulta directa por WhatsApp con tutor educativo.</li>
+          <li><span>🎓</span> Carné digital oficial para certificar tu autonomía en el colegio.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function updateBadgePreview() {
+      const name = document.getElementById('regName').value.trim();
+      const nickname = document.getElementById('regNickname').value.trim();
+      const school = document.getElementById('regSchool').value.trim();
+      const city = document.getElementById('regCity').value.trim();
+      const subject = document.getElementById('regSubject').value;
+
+      document.getElementById('previewName').innerText = nickname || name || 'Tu Nombre Aquí';
+      document.getElementById('previewSchool').innerText = `${school || 'Tu Institución Educativa'} • Grado 9°`;
+      document.getElementById('previewCity').innerText = city || 'Colombia';
+      document.getElementById('previewSubject').innerText = subject;
+    }
+
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const nickname = document.getElementById('regNickname').value.trim() || name.split(' ')[0];
+      const school = document.getElementById('regSchool').value.trim();
+      const city = document.getElementById('regCity').value.trim();
+      const subject = document.getElementById('regSubject').value;
+      const email = document.getElementById('regEmail').value.trim();
+      const whatsapp = document.getElementById('regWhatsapp').value.trim();
+      const challenge = document.getElementById('regChallenge').value.trim();
+
+      const studentProfile = {
+        name, nickname, school, city, subject, email, whatsapp, challenge,
+        registeredAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('studentProfile', JSON.stringify(studentProfile));
+      showToast(`⚡ ¡Excelente, ${nickname}! Tu perfil ha sido creado.`);
+
+      setTimeout(() => {
+        window.location.href = 'panel.html';
+      }, 1000);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+  </script>
+</body>
+</html>

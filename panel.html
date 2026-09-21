@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú Principal del Estudiante | Volver a Aprender 9°</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --accent-purple: #a855f7;
+      --accent-cyan: #38bdf8;
+      --accent-green: #10b981;
+      --bg-dark: #040217;
+      --bg-card: #0c0a22;
+      --bg-card-hover: #151036;
+      --text-main: #f1f0ff;
+      --text-muted: #a5a2c8;
+      --border-color: rgba(99, 102, 241, 0.22);
+      --border-hover: rgba(168, 85, 247, 0.6);
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.25), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.2), transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ambient-orb {
+      position: fixed; border-radius: 50%; filter: blur(95px); pointer-events: none; z-index: 0;
+    }
+    .orb-1 { width: 500px; height: 500px; top: -120px; right: -80px; background: rgba(99, 102, 241, 0.22); }
+    .orb-2 { width: 450px; height: 450px; bottom: -80px; left: -100px; background: rgba(168, 85, 247, 0.18); }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(4, 2, 23, 0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color); padding: 0.85rem 1.5rem;
+    }
+    .nav-container {
+      max-width: 1250px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo-box {
+      display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: white;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 900; box-shadow: 0 0 22px rgba(99, 102, 241, 0.5);
+    }
+    .logo-text h1 { font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 800; }
+    .logo-text span { font-size: 0.72rem; color: var(--primary-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+    nav ul {
+      display: flex; list-style: none; gap: 1.25rem; align-items: center;
+    }
+    nav a {
+      color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: color 0.2s;
+    }
+    nav a:hover { color: white; }
+
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.65rem 1.35rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem;
+      cursor: pointer; text-decoration: none; transition: all 0.25s ease; border: none;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--border-color);
+    }
+    .btn-secondary:hover { background: rgba(99, 102, 241, 0.15); border-color: var(--primary-light); transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #818cf8, #a855f7); transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+    }
+    .btn-sm { padding: 0.45rem 1rem; font-size: 0.82rem; }
+
+    main {
+      flex: 1; max-width: 1250px; margin: 2rem auto 4rem; padding: 0 1.5rem;
+      position: relative; z-index: 1; width: 100%;
+    }
+
+    /* WELCOME HERO OF THE MENU */
+    .menu-hero {
+      background: linear-gradient(135deg, rgba(20, 16, 52, 0.9), rgba(12, 10, 34, 0.95));
+      border: 1px solid rgba(129, 140, 248, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 40px rgba(99, 102, 241, 0.18);
+      position: relative; overflow: hidden;
+    }
+    .menu-hero::after {
+      content: ''; position: absolute; right: -10%; top: -30%; width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-top-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem; position: relative; z-index: 1;
+    }
+    .hero-user-info { display: flex; align-items: center; gap: 1.25rem; }
+    .hero-avatar {
+      width: 68px; height: 68px; border-radius: 20px;
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      display: grid; place-items: center; font-size: 2rem;
+      box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+    }
+    .hero-welcome-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(129, 140, 248, 0.35);
+      padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 800;
+      color: var(--primary-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.35rem;
+    }
+    .hero-title {
+      font-size: 2.1rem; font-family: 'Outfit', sans-serif; font-weight: 800; line-height: 1.15; color: white;
+    }
+    .hero-subtitle {
+      color: #cbd5e1; font-size: 0.95rem; margin-top: 0.25rem;
+    }
+
+    .progress-bar-container {
+      background: rgba(3, 2, 15, 0.6); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px; padding: 1.25rem 1.5rem; position: relative; z-index: 1;
+    }
+    .progress-header {
+      display: flex; justify-content: space-between; align-items: center; font-size: 0.88rem; font-weight: 700; margin-bottom: 0.6rem;
+    }
+    .progress-track {
+      height: 11px; background: rgba(255, 255, 255, 0.1); border-radius: 999px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0%; background: linear-gradient(90deg, #6366f1, #a855f7, #38bdf8);
+      border-radius: inherit; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* SECTION HEADINGS IN MENU */
+    .section-title-wrap {
+      display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;
+    }
+    .section-heading {
+      font-size: 1.6rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: white;
+    }
+    .section-sub { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.2rem; }
+
+    /* MODULES GRID - THE CORE OF THE MENU */
+    .modules-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;
+    }
+    .module-card {
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); padding: 1.75rem; display: flex; flex-direction: column;
+      justify-content: space-between; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative; overflow: hidden;
+    }
+    .module-card:hover {
+      transform: translateY(-6px); border-color: var(--border-hover);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.25);
+      background: var(--bg-card-hover);
+    }
+    .mod-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+    .mod-number {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(129, 140, 248, 0.35);
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: white;
+    }
+    .mod-badge {
+      font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .mod-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: white; }
+    .mod-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; flex: 1; }
+    
+    .mod-footer {
+      display: flex; justify-content: space-between; align-items: center; padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mod-meta { font-size: 0.8rem; color: #94a3b8; display: flex; gap: 0.85rem; }
+
+    /* TOOLS HUB */
+    .tools-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.35rem; margin-bottom: 3.5rem;
+    }
+    .tool-card {
+      background: rgba(12, 10, 34, 0.7); border: 1px solid var(--border-color);
+      border-radius: var(--radius-md); padding: 1.5rem; transition: all 0.25s ease;
+      text-decoration: none; color: inherit; display: flex; flex-direction: column;
+    }
+    .tool-card:hover {
+      transform: translateY(-4px); border-color: var(--primary-light);
+      background: rgba(20, 16, 52, 0.9); box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+    }
+    .tool-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+      border: 1px solid rgba(129, 140, 248, 0.3); display: grid; place-items: center;
+      font-size: 1.6rem; margin-bottom: 1rem;
+    }
+    .tool-title { font-family: 'Outfit', sans-serif; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.35rem; color: white; }
+    .tool-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem; flex: 1; }
+    .tool-action { font-size: 0.82rem; font-weight: 700; color: var(--primary-light); display: flex; align-items: center; gap: 0.3rem; }
+
+    /* CARNÉ SECTION */
+    .carne-panel {
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.75), rgba(15, 23, 42, 0.85));
+      border: 1px solid rgba(129, 140, 248, 0.35); border-radius: var(--radius-lg);
+      padding: 2rem; display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .carne-left { display: flex; align-items: center; gap: 1.5rem; }
+    .carne-badge-icon { font-size: 3.5rem; }
+    .carne-name { font-size: 1.5rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: white; }
+    .carne-sub { color: #cbd5e1; font-size: 0.9rem; margin-top: 0.25rem; }
+
+    @media (max-width: 768px) {
+      .menu-hero { padding: 1.75rem 1.5rem; }
+      .modules-grid { grid-template-columns: 1fr; }
+      nav ul { display: none; }
+      .carne-panel { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-box">
+        <div class="logo-badge">9°</div>
+        <div class="logo-text">
+          <h1>Volver a Aprender</h1>
+          <span>Menú Principal del Estudiante</span>
+        </div>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">🏠 Web Pública</a></li>
+          <li><a href="index.html#curso-completo">📚 Los 6 Módulos</a></li>
+          <li><a href="index.html#simulador">🧪 Laboratorio</a></li>
+          <li><a href="index.html#semaforo">🚦 Semáforo</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <div style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0.85rem; background:rgba(99,102,241,0.15); border:1px solid rgba(129,140,248,0.3); border-radius:999px;">
+          <span>👤</span> <strong id="headerUserName" style="font-size:0.85rem; color:white;">Estudiante</strong>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="logoutStudent()">🚪 Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO DE BIENVENIDA AL MENÚ PRINCIPAL -->
+    <div class="menu-hero">
+      <div class="hero-top-row">
+        <div class="hero-user-info">
+          <div class="hero-avatar">🎓</div>
+          <div>
+            <div class="hero-welcome-badge">✔ Menú Principal Activo · 2026</div>
+            <h2 class="hero-title" id="welcomeTitle">¡Hola de nuevo, Estudiante! 🚀</h2>
+            <p class="hero-subtitle" id="welcomeDetails">Estudiante de Grado 9° en I.E. Concejo de Medellín · Medellín</p>
+          </div>
+        </div>
+        <div>
+          <a href="index.html#curso-completo" class="btn btn-primary" id="btnContinueCourse">
+            ▶ Continuar Curso Oficial ➔
+          </a>
+        </div>
+      </div>
+
+      <!-- BARRA DE PROGRESO GENERAL -->
+      <div class="progress-bar-container">
+        <div class="progress-header">
+          <span>Progreso General en los 6 Módulos Oficiales</span>
+          <span id="progressText" style="color:var(--primary-light);">0 de 6 módulos completados (0%)</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: MENÚ DE MÓDULOS (LAS 6 LECCIONES) -->
+    <div class="section-title-wrap">
+      <div>
+        <h3 class="section-heading">Plan de Aprendizaje Oficial</h3>
+        <p class="section-sub">Explora los 6 módulos diseñados para el currículo de 9° y pruebas Saber.</p>
+      </div>
+      <a href="index.html#curso-completo" style="color:var(--primary-light); font-size:0.88rem; font-weight:700; text-decoration:none;">
+        Ver programa completo ➔
+      </a>
+    </div>
+
+    <div class="modules-grid">
+      <!-- MÓDULO 1 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">01</div>
+          <span class="mod-badge">Fundamentos</span>
+        </div>
+        <h4 class="mod-title">Autonomía y Fundamentos con IA</h4>
+        <p class="mod-desc">Aprende a usar la inteligencia artificial sin perder tu pensamiento crítico ni delegar la comprensión que te corresponde.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 45 min</span>
+            <span>⭐ Básico</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(1)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+
+      <!-- MÓDULO 2 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">02</div>
+          <span class="mod-badge">Método Socrático</span>
+        </div>
+        <h4 class="mod-title">Preguntar, Pensar y Verificar</h4>
+        <p class="mod-desc">El arte del prompting activo: no pidas la respuesta resuelta de golpe, pídele que actúe como tutor y te dé pistas paso a paso.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 50 min</span>
+            <span>🔍 Pensamiento</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(2)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+
+      <!-- MÓDULO 3 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">03</div>
+          <span class="mod-badge">Creación</span>
+        </div>
+        <h4 class="mod-title">Aprender sin Copy-Paste</h4>
+        <p class="mod-desc">Estrategias de redacción, paráfrasis y asimilación de conceptos para que tus trabajos reflejen tu propia voz y entendimiento.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 40 min</span>
+            <span>✍️ Originalidad</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(3)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+
+      <!-- MÓDULO 4 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">04</div>
+          <span class="mod-badge">Rendimiento</span>
+        </div>
+        <h4 class="mod-title">Plan de Estudio para Mejores Notas</h4>
+        <p class="mod-desc">Crea simulacros cronometrados tipo Saber 9° y entrena tus debilidades en matemáticas, lenguaje y ciencias con retroalimentación.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 55 min</span>
+            <span>📊 Saber 9°</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(4)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+
+      <!-- MÓDULO 5 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">05</div>
+          <span class="mod-badge">Ética Digital</span>
+        </div>
+        <h4 class="mod-title">Privacidad, Ética y Decisiones</h4>
+        <p class="mod-desc">Seguridad de datos en el entorno escolar: qué datos jamás compartir y cómo evitar trampas que anulen tu aprendizaje real.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 35 min</span>
+            <span>🛡️ Ciberseguridad</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(5)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+
+      <!-- MÓDULO 6 -->
+      <div class="module-card">
+        <div class="mod-card-top">
+          <div class="mod-number">06</div>
+          <span class="mod-badge">Certificación</span>
+        </div>
+        <h4 class="mod-title">Proyecto Final y Ruta de Autonomía</h4>
+        <p class="mod-desc">Desarrolla un proyecto escolar integrador de 7 días, susténtalo con tus propias palabras y obtén tu certificación de 9°.</p>
+        <div class="mod-footer">
+          <div class="mod-meta">
+            <span>⏱️ 60 min</span>
+            <span>🏆 Proyecto</span>
+          </div>
+          <a href="index.html#curso-completo" onclick="selectModule(6)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: HUB DE HERRAMIENTAS DEL ESTUDIANTE -->
+    <div class="section-title-wrap">
+      <div>
+        <h3 class="section-heading">Herramientas y Acciones Rápidas</h3>
+        <p class="section-sub">Entrena, evalúa y organiza tu método de estudio.</p>
+      </div>
+    </div>
+
+    <div class="tools-grid">
+      <!-- SIMULADOR DE PROMPTS -->
+      <a href="index.html#simulador" class="tool-card">
+        <div class="tool-icon">🧪</div>
+        <h4 class="tool-title">Laboratorio de Prompts</h4>
+        <p class="tool-desc">Escribe tus consultas y descubre si tu prompt está en "Modo Pereza" o en "Modo Aprendizaje Activo".</p>
+        <div class="tool-action">Probar simulador ➔</div>
+      </a>
+
+      <!-- SEMÁFORO ÉTICO -->
+      <a href="index.html#semaforo" class="tool-card">
+        <div class="tool-icon">🚦</div>
+        <h4 class="tool-title">Semáforo de la IA</h4>
+        <p class="tool-desc">Aprende al instante qué actividades tienen vía libre (verde), cuáles precaución (amarillo) y cuáles prohibición (rojo).</p>
+        <div class="tool-action">Ver semáforo ➔</div>
+      </a>
+
+      <!-- ESTUDIO ACTIVO -->
+      <a href="index.html#colaborativo" class="tool-card">
+        <div class="tool-icon">👥</div>
+        <h4 class="tool-title">Estudio Colaborativo</h4>
+        <p class="tool-desc">Aprende técnicas para debatir con tus compañeros en clase y sustentar ideas frente a los profesores sin pantallas.</p>
+        <div class="tool-action">Explorar método ➔</div>
+      </a>
+
+      <!-- REGISTRO Y EDICIÓN -->
+      <a href="index.html#registro" class="tool-card">
+        <div class="tool-icon">✏️</div>
+        <h4 class="tool-title">Actualizar Mi Perfil</h4>
+        <p class="tool-desc">Edita tu materia de refuerzo, colegio, ciudad o datos de contacto cuando lo necesites.</p>
+        <div class="tool-action">Editar datos ➔</div>
+      </a>
+    </div>
+
+    <!-- CARNÉ VIRTUAL OFICIAL -->
+    <div class="carne-panel">
+      <div class="carne-left">
+        <div class="carne-badge-icon">🎖️</div>
+        <div>
+          <div style="font-size:0.75rem; color:var(--primary-light); text-transform:uppercase; font-weight:800; letter-spacing:1px; margin-bottom:0.25rem;">Carné Digital Acreditado</div>
+          <div class="carne-name" id="carneName">Estudiante Estratega</div>
+          <div class="carne-sub" id="carneDetails">I.E. Concejo de Medellín · Grado 9° Colombia</div>
+        </div>
+      </div>
+      <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+        <a id="btnTutorWhatsApp" href="#" target="_blank" class="btn btn-primary" style="display:none;">
+          💬 Consultar Tutor por WhatsApp
+        </a>
+        <a href="index.html#curso-completo" class="btn btn-secondary">
+          📚 Ir al Curso Completo
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function readStoredJSON(key, fallback) {
+      try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
+      catch (e) { return fallback; }
+    }
+
+    function initMenuPrincipal() {
+      const profile = readStoredJSON('studentProfile', null);
+      if (!profile || !profile.name) {
+        // Redirigir si no hay registro
+        window.location.href = 'index.html#registro';
+        return;
+      }
+
+      const nickname = profile.nickname || profile.name.split(' ')[0];
+      document.getElementById('headerUserName').textContent = nickname;
+      document.getElementById('welcomeTitle').textContent = `¡Hola de nuevo, ${nickname}! 🚀`;
+      document.getElementById('welcomeDetails').textContent = `Estudiante de Grado 9° en ${profile.school || 'I.E. Concejo de Medellín'} · ${profile.city || 'Medellín'}`;
+      
+      document.getElementById('carneName').textContent = `${profile.name} (Carné #9-${profile.city ? profile.city.slice(0,3).toUpperCase() : 'COL'})`;
+      document.getElementById('carneDetails').textContent = `${profile.school} • Materia clave: ${profile.subject || 'Matemáticas y Álgebra'}`;
+
+      if (profile.whatsapp || profile.subject) {
+        const btnWa = document.getElementById('btnTutorWhatsApp');
+        const msg = encodeURIComponent(`Hola tutor, soy ${profile.name} de grado 9° en ${profile.school} (${profile.city}). Me gustaría recibir asesoría en ${profile.subject}.`);
+        btnWa.href = `https://wa.me/?text=${msg}`;
+        btnWa.style.display = 'inline-flex';
+      }
+
+      // Progreso
+      const completed = readStoredJSON('completedModules', []);
+      const count = Math.min(completed.length, 6);
+      const pct = Math.round((count / 6) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = `${count} de 6 módulos completados (${pct}%)`;
+    }
+
+    function selectModule(num) {
+      localStorage.setItem('selectedModule', num);
+    }
+
+    function logoutStudent() {
+      if (confirm('¿Deseas cerrar tu sesión en este dispositivo?')) {
+        localStorage.removeItem('studentProfile');
+        window.location.href = 'index.html';
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', initMenuPrincipal);
+  </script>
+</body>
+</html>

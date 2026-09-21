@@ -10,118 +10,322 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* 3D CANVAS & HIGH-END VISUAL SYSTEM */
+    /* ============================================================
+       MEGA ANIMATION ENGINE — BUZZ-INSPIRED 400% UPGRADE
+       ============================================================ */
+
+    /* GLOBAL CANVAS */
     #bg3dCanvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.7;
+      opacity: 0.55;
+      mix-blend-mode: screen;
     }
 
+    /* ANIMATED GRADIENT MESH BACKGROUND */
+    .gradient-mesh-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .gradient-mesh-bg .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      will-change: transform;
+    }
+    .gradient-mesh-bg .orb-1 {
+      width: 55vw; height: 55vw;
+      top: -20%; left: -10%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.35), transparent 70%);
+      animation: meshOrb1 20s ease-in-out infinite alternate;
+    }
+    .gradient-mesh-bg .orb-2 {
+      width: 45vw; height: 45vw;
+      bottom: -15%; right: -5%;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.3), transparent 70%);
+      animation: meshOrb2 18s ease-in-out infinite alternate;
+    }
+    .gradient-mesh-bg .orb-3 {
+      width: 35vw; height: 35vw;
+      top: 40%; left: 50%;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.2), transparent 70%);
+      animation: meshOrb3 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes meshOrb1 {
+      0%   { transform: translate(0, 0) scale(1); }
+      33%  { transform: translate(10vw, 8vh) scale(1.1); }
+      66%  { transform: translate(-5vw, 15vh) scale(0.95); }
+      100% { transform: translate(8vw, -5vh) scale(1.05); }
+    }
+    @keyframes meshOrb2 {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(-12vw, -10vh) scale(1.15); }
+      100% { transform: translate(5vw, 8vh) scale(0.9); }
+    }
+    @keyframes meshOrb3 {
+      0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50%  { transform: translate(-8vw, 12vh) scale(1.2) rotate(180deg); }
+      100% { transform: translate(10vw, -8vh) scale(0.85) rotate(360deg); }
+    }
+
+    /* NOISE GRAIN OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    /* MAGNETIC CURSOR GLOW */
+    .cursor-glow {
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: left 0.5s cubic-bezier(0.16,1,0.3,1), top 0.5s cubic-bezier(0.16,1,0.3,1);
+      will-change: left, top;
+    }
+
+    /* 3D TILT CARDS — UPGRADED */
     .tilt-card-3d {
-      perspective: 1000px;
+      perspective: 1200px;
       transform-style: preserve-3d;
-      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99), box-shadow 0.4s ease, border-color 0.4s ease;
       position: relative;
+      will-change: transform;
     }
-
     .tilt-card-3d::before {
       content: '';
       position: absolute;
       inset: -1px;
       border-radius: inherit;
       padding: 1px;
-      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(96, 165, 250, 0.5), transparent 40%);
+      background: radial-gradient(700px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(129, 140, 248, 0.55), transparent 40%);
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
       pointer-events: none;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
-
-    .tilt-card-3d:hover::before {
-      opacity: 1;
+    .tilt-card-3d:hover::before { opacity: 1; }
+    .tilt-card-3d:hover {
+      box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2), 0 0 40px rgba(139, 92, 246, 0.15);
     }
 
     .tilt-depth-element {
-      transform: translateZ(35px);
-      transition: transform 0.3s ease;
+      transform: translateZ(45px);
+      transition: transform 0.4s ease;
     }
 
+    /* LOGO FLOAT — UPGRADED */
     .logo-badge {
-      animation: logoFloat3D 4s ease-in-out infinite alternate;
+      animation: logoFloat3D 5s ease-in-out infinite alternate;
       transform-style: preserve-3d;
     }
-
     @keyframes logoFloat3D {
-      0% { transform: translateY(0) rotateY(0deg) rotateX(0deg); }
-      50% { transform: translateY(-5px) rotateY(15deg) rotateX(8deg); }
-      100% { transform: translateY(0) rotateY(-15deg) rotateX(-8deg); }
+      0%   { transform: translateY(0) rotateY(0deg) rotateX(0deg) scale(1); }
+      25%  { transform: translateY(-4px) rotateY(8deg) rotateX(5deg) scale(1.02); }
+      50%  { transform: translateY(-7px) rotateY(18deg) rotateX(10deg) scale(1.04); }
+      75%  { transform: translateY(-3px) rotateY(-6deg) rotateX(-4deg) scale(1.01); }
+      100% { transform: translateY(0) rotateY(-18deg) rotateX(-10deg) scale(1); }
     }
 
+    /* FLOATING ORBS */
     .orb-3d {
       position: absolute;
       border-radius: 50%;
-      filter: blur(60px);
+      filter: blur(80px);
       pointer-events: none;
       z-index: 0;
-      animation: orbPulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate;
+      will-change: transform;
     }
     .orb-3d-1 {
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(37, 99, 235, 0.28), transparent 70%);
-      top: -100px;
-      right: -50px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.35), transparent 70%);
+      top: -120px; right: -60px;
+      animation: orbFloat1 12s ease-in-out infinite alternate;
     }
     .orb-3d-2 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(139, 92, 246, 0.22), transparent 70%);
-      bottom: 10%;
-      left: -100px;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.28), transparent 70%);
+      bottom: 5%; left: -120px;
+      animation: orbFloat2 15s ease-in-out infinite alternate;
+    }
+    @keyframes orbFloat1 {
+      0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
+      50%  { transform: translate(60px, 40px) scale(1.2); opacity: 1; }
+      100% { transform: translate(-30px, -20px) scale(0.9); opacity: 0.6; }
+    }
+    @keyframes orbFloat2 {
+      0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+      50%  { transform: translate(-50px, -60px) scale(1.3); opacity: 0.9; }
+      100% { transform: translate(40px, 30px) scale(0.85); opacity: 0.5; }
     }
 
-    @keyframes orbPulse {
-      0% { transform: scale(1) translate3d(0, 0, 0); }
-      100% { transform: scale(1.25) translate3d(40px, -30px, 60px); }
-    }
-
+    /* SCROLL REVEAL — UPGRADED WITH STAGGER */
     .scroll-3d-reveal {
       opacity: 0;
-      transform: perspective(1000px) rotateX(15deg) translateY(45px) scale(0.96);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: perspective(1200px) rotateX(12deg) translateY(60px) scale(0.94);
+      transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .scroll-3d-reveal.is-visible {
       opacity: 1;
-      transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+      transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
+    }
+
+    /* STAGGER CHILDREN */
+    .stagger-children > * {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .stagger-children.is-visible > *:nth-child(1) { transition-delay: 0.05s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(2) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(3) { transition-delay: 0.19s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(4) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(5) { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(6) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+    .stagger-children.is-visible > *:nth-child(n+7) { transition-delay: 0.47s; opacity: 1; transform: translateY(0); }
+
+    /* HERO TEXT CLIP-REVEAL ANIMATION */
+    .text-reveal {
+      display: inline-block;
+      overflow: hidden;
+    }
+    .text-reveal > span {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: textSlideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes textSlideUp {
+      to { transform: translateY(0); }
+    }
+
+    /* HERO ENTRANCE ANIMATION */
+    .hero-entrance {
+      animation: heroFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes heroFadeIn {
+      0%   { opacity: 0; transform: translateY(50px) scale(0.96); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* HERO IMAGE FLOAT */
+    .hero-img-float {
+      animation: heroImgFloat 6s ease-in-out infinite alternate;
+    }
+    @keyframes heroImgFloat {
+      0%   { transform: translateY(0) rotate(0deg); }
+      50%  { transform: translateY(-14px) rotate(0.8deg); }
+      100% { transform: translateY(4px) rotate(-0.5deg); }
+    }
+
+    /* BUTTON RIPPLE EFFECT */
+    .btn { position: relative; overflow: hidden; }
+    .btn .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transform: scale(0);
+      animation: rippleExpand 0.6s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes rippleExpand {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* SECTION HEADINGS GLOW ON SCROLL */
+    .section-title {
+      transition: text-shadow 0.6s ease;
+    }
+    .is-visible .section-title {
+      text-shadow: 0 0 40px rgba(99, 102, 241, 0.3), 0 0 80px rgba(139, 92, 246, 0.15);
+    }
+
+    /* CARD HOVER AURORA BORDER */
+    .stat-card, .module-tile, .path-card, .panel-card, .callout-card {
+      position: relative;
+      transition: transform 0.35s cubic-bezier(0.03, 0.98, 0.52, 0.99), 
+                  box-shadow 0.4s ease, 
+                  border-color 0.4s ease;
+    }
+    .stat-card:hover, .module-tile:hover, .path-card:hover, .panel-card:hover, .callout-card:hover {
+      border-color: rgba(129, 140, 248, 0.4) !important;
+      box-shadow: 0 0 30px rgba(99, 102, 241, 0.15), 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    /* PROGRESS BAR SHIMMER */
+    .progress-fill {
+      position: relative;
+      overflow: hidden;
+    }
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: shimmer 2.5s infinite;
+    }
+    @keyframes shimmer {
+      to { left: 100%; }
+    }
+
+    /* SMOOTH PAGE LOAD */
+    body {
+      animation: pageLoad 0.8s ease-out;
+    }
+    @keyframes pageLoad {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* HEADER SCROLL MORPH */
+    header.scrolled {
+      padding: 0.5rem 0;
+      background: rgba(3, 0, 20, 0.96);
+      box-shadow: 0 4px 30px rgba(99, 102, 241, 0.12);
     }
 
     :root {
-      --primary: #2563eb;
-      --primary-dark: #1d4ed8;
-      --primary-light: #60a5fa;
-      --secondary: #0d9488;
-      --accent-yellow: #f59e0b;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #a5b4fc;
+      --primary-glow: rgba(99, 102, 241, 0.45);
+      --secondary: #38bdf8;
+      --accent-purple: #a855f7;
+      --accent-violet: #8b5cf6;
+      --accent-pink: #ec4899;
       --accent-coral: #f43f5e;
       --accent-green: #10b981;
-      --accent-purple: #8b5cf6;
-      --bg-dark: #090e1a;
-      --bg-card: #131b2e;
-      --bg-card-hover: #1e293b;
+      --accent-yellow: #f59e0b;
+      --bg-dark: #050512;
+      --bg-card: #0b0c1e;
+      --bg-card-hover: #131530;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --radius-sm: 8px;
+      --border-color: rgba(99, 102, 241, 0.2);
+      --border-color-hover: rgba(168, 85, 247, 0.6);
+      --radius-sm: 10px;
       --radius-md: 16px;
-      --radius-lg: 24px;
-      --shadow-glow: 0 0 30px rgba(37, 99, 235, 0.25);
+      --radius-lg: 26px;
+      --shadow-glow: 0 0 45px rgba(99, 102, 241, 0.35);
     }
 
     * {
@@ -132,8 +336,12 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.08), transparent 50%);
+      background-size: 100% 100%, 32px 32px;
       color: var(--text-main);
       line-height: 1.6;
       overflow-x: hidden;
@@ -176,7 +384,8 @@
     }
 
     .logo-badge {
-      background: linear-gradient(135deg, #2563eb, #8b5cf6);
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      color: white;
       width: 44px;
       height: 44px;
       border-radius: 12px;
@@ -348,7 +557,7 @@
     }
 
     .hero-title .gradient-text {
-      background: linear-gradient(135deg, #60a5fa, #c084fc, #f43f5e);
+      background: linear-gradient(135deg, #e0e7ff 0%, #818cf8 40%, #c084fc 70%, #f472b6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -1160,7 +1369,7 @@
     }
 
     /* NUEVA EXPERIENCIA DE PLATAFORMA */
-    body { background: radial-gradient(circle at 15% 0%, rgba(37,99,235,.18), transparent 32rem), var(--bg-dark); }
+    body { background: radial-gradient(circle at 15% 0%, rgba(99,102,241,.18), transparent 32rem), var(--bg-dark); }
     header { background: rgba(9, 14, 26, .78); }
     .platform-section { padding: 5rem 0; position: relative; }
     .platform-shell { background: linear-gradient(145deg, rgba(19,27,46,.96), rgba(15,23,42,.82)); border: 1px solid rgba(96,165,250,.18); border-radius: 28px; padding: 1.35rem; box-shadow: 0 24px 70px rgba(0,0,0,.25); }
@@ -1201,6 +1410,455 @@
     body.warm-tone { --primary: #c2410c; --primary-dark: #9a3412; --primary-light: #fb923c; --secondary: #0f766e; --bg-dark: #1c1210; }
     @media (max-width: 900px) { .dashboard-grid, .roadmap-layout { grid-template-columns: 1fr; } .module-track { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 520px) { .module-track { grid-template-columns: 1fr; } .setting-row { align-items: flex-start; flex-direction: column; } .setting-row input[type=range], .setting-row select { width: 100%; } }
+
+    /* NAVEGACIÓN Y EXPERIENCIA 2026 */
+    html { scroll-padding-top: 6.25rem; }
+    .skip-link { position: fixed; left: 1rem; top: -4rem; z-index: 2000; padding: .7rem 1rem; border-radius: 10px; background: white; color: #0f172a; font-weight: 700; }
+    .skip-link:focus { top: 1rem; }
+    .nav-wrapper { gap: 1rem; }
+    nav .nav-list { gap: .3rem; }
+    nav .nav-list a { display: block; padding: .5rem .7rem; border-radius: 9px; white-space: nowrap; }
+    nav .nav-list a:hover, nav .nav-list a:focus-visible { background: rgba(96,165,250,.12); color: #e0f2fe; outline: none; }
+    .menu-toggle { display: none; width: 42px; height: 42px; padding: 0; border: 1px solid var(--border-color); border-radius: 12px; background: rgba(255,255,255,.05); color: white; font-size: 1.2rem; cursor: pointer; }
+    .hero { padding: 5.5rem 0 4.25rem; }
+    .hero-kicker { color: #c4b5fd; font-size: .88rem; font-weight: 700; letter-spacing: .04em; margin-top: -.4rem; margin-bottom: 1.1rem; }
+    .hero-title { max-width: 14ch; font-size: clamp(2.55rem, 5vw, 4.15rem); line-height: 1.05; letter-spacing: -0.045em; }
+    .hero-subtitle { max-width: 60ch; font-size: 1.06rem; }
+    .quick-stats { margin-top: 2.35rem; }
+    .stat-card { text-align: left; padding: 1.15rem; }
+    .stat-num { color: #e0f2fe; }
+    .section-eyebrow { color: #7dd3fc; text-transform: uppercase; letter-spacing: .1em; font-size: .75rem; font-weight: 800; margin-bottom: .7rem; }
+    .explore-section { padding: 2.25rem 0 5.5rem; position: relative; }
+    .explore-shell { position: relative; overflow: hidden; padding: clamp(1.4rem, 4vw, 2.5rem); border: 1px solid rgba(125,211,252,.18); border-radius: 28px; background: linear-gradient(125deg, rgba(15,23,42,.97), rgba(24,35,63,.9)); box-shadow: 0 28px 60px rgba(0,0,0,.18); }
+    .explore-shell::after { content: ''; position: absolute; width: 22rem; height: 22rem; right: -10rem; top: -14rem; border-radius: 50%; background: radial-gradient(circle, rgba(45,212,191,.18), transparent 67%); pointer-events: none; }
+    .explore-heading { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: end; }
+    .explore-heading h3 { font-size: clamp(1.75rem, 3vw, 2.35rem); line-height: 1.12; max-width: 19ch; }
+    .explore-heading p { max-width: 53ch; color: var(--text-muted); }
+    .search-form { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto; gap: .75rem; margin-top: 1.65rem; }
+    .search-form input { min-width: 0; height: 3.55rem; border: 1px solid rgba(125,211,252,.25); border-radius: 14px; padding: 0 1rem; color: white; background: rgba(2,6,23,.62); font: inherit; }
+    .search-form input::placeholder { color: #94a3b8; }
+    .search-form input:focus { outline: 3px solid rgba(125,211,252,.22); border-color: #7dd3fc; }
+    .search-hint { position: relative; z-index: 1; margin-top: .75rem; color: #a5b4fc; font-size: .8rem; }
+    .search-chips { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1.05rem; }
+    .search-chip { padding: .45rem .7rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.045); color: #cbd5e1; font: inherit; font-size: .82rem; cursor: pointer; }
+    .search-chip:hover, .search-chip:focus-visible { color: white; border-color: #60a5fa; background: rgba(37,99,235,.18); outline: none; }
+    .path-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: .85rem; margin-top: 1.6rem; }
+    .path-card { display: flex; flex-direction: column; gap: .5rem; min-height: 12rem; padding: 1.1rem; border: 1px solid rgba(255,255,255,.09); border-radius: 17px; color: inherit; text-decoration: none; background: rgba(2,6,23,.35); transition: transform .2s ease, border-color .2s ease, background .2s ease; }
+    .path-card:hover, .path-card:focus-visible { transform: translateY(-3px); border-color: rgba(125,211,252,.6); background: rgba(37,99,235,.12); outline: none; }
+    .path-icon { width: 2.6rem; height: 2.6rem; display: grid; place-items: center; border-radius: 12px; background: rgba(37,99,235,.18); font-size: 1.25rem; }
+    .path-card strong { font-family: 'Outfit', sans-serif; font-size: 1.05rem; }
+    .path-card span:last-child { color: var(--text-muted); font-size: .84rem; }
+    .platform-section .section-header { max-width: 700px; margin-bottom: 1.8rem; }
+    .local-note { display: flex; gap: .65rem; margin-top: 1rem; padding: .8rem .9rem; border-left: 3px solid #38bdf8; border-radius: 8px; background: rgba(14,165,233,.08); color: #cbd5e1; font-size: .79rem; line-height: 1.5; }
+    .next-step { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1.1rem 0; padding: .9rem; border: 1px solid rgba(52,211,153,.2); border-radius: 14px; background: rgba(16,185,129,.08); }
+    .next-step-copy small { display: block; color: #a7f3d0; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .next-step-copy strong { display: block; margin-top: .15rem; color: #ecfdf5; }
+    .register-privacy { margin-top: .85rem; color: #94a3b8; font-size: .78rem; line-height: 1.5; }
+    .toast { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 3000; max-width: 350px; padding: 1rem 1.1rem; border: 1px solid rgba(110,231,183,.38); border-radius: 15px; background: #10241f; color: #ecfdf5; box-shadow: 0 18px 45px rgba(0,0,0,.35); transform: translateY(150%); opacity: 0; transition: .25s ease; }
+    .toast.is-visible { transform: translateY(0); opacity: 1; }
+    .toast[aria-hidden='true'] { pointer-events: none; }
+    @media (max-width: 1050px) { nav .nav-list { gap: 0; } nav .nav-list a { padding-inline: .45rem; font-size: .82rem; } }
+    @media (max-width: 900px) {
+      .menu-toggle { display: inline-grid; place-items: center; }
+      nav { order: 3; width: 100%; }
+      nav .nav-list { display: none; width: 100%; padding: .6rem; border: 1px solid var(--border-color); border-radius: 16px; background: #101827; }
+      nav .nav-list.is-open { display: grid; grid-template-columns: repeat(2, 1fr); }
+      nav .nav-list a { padding: .75rem; }
+      .nav-wrapper { flex-wrap: wrap; }
+      .explore-heading { grid-template-columns: 1fr; gap: .75rem; }
+      .path-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .container { padding-inline: 1rem; }
+      .logo-text span { display: none; }
+      .nav-actions .btn { display: none; }
+      .hero { padding-top: 3.4rem; }
+      .hero-title { font-size: 2.55rem; }
+      .search-form { grid-template-columns: 1fr; }
+      nav .nav-list.is-open { grid-template-columns: 1fr; }
+      .next-step { align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      #bg3dCanvas { display: none; }
+    }
+  
+    /* BUZZ.XYZ AUTH MODAL & INTERACTIVE STYLES */
+    .buzz-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(7, 8, 10, 0.86);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .buzz-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .buzz-modal-card {
+      background: #0c0a1d;
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 24px;
+      padding: 2.25rem;
+      width: 92%;
+      max-width: 480px;
+      box-shadow: 0 0 60px rgba(99, 102, 241, 0.25), 0 25px 70px rgba(0, 0, 0, 0.8);
+      transform: scale(0.92) translateY(24px);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .buzz-modal-overlay.active .buzz-modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .buzz-modal-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .buzz-modal-close:hover {
+      background: rgba(99, 102, 241, 0.2);
+      color: #818cf8;
+      border-color: #818cf8;
+      transform: rotate(90deg);
+    }
+
+    .buzz-modal-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .buzz-modal-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(215, 215, 46, 0.12);
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #818cf8;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .buzz-modal-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 0.35rem;
+    }
+
+    .buzz-modal-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .auth-tab-bar {
+      display: flex;
+      position: relative;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(129, 140, 248, 0.18);
+      border-radius: 9999px;
+      padding: 4px;
+      margin-bottom: 1.75rem;
+    }
+
+    .auth-tab-btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 1;
+      transition: color 0.25s;
+      border-radius: 9999px;
+    }
+
+    .auth-tab-btn.active {
+      color: white;
+    }
+
+    .auth-tab-indicator {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      left: 4px;
+      width: calc(50% - 4px);
+      background: linear-gradient(135deg, #6366f1, #a855f7);
+      border-radius: 9999px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 14px rgba(99, 102, 241, 0.5);
+    }
+
+    .auth-tab-indicator.tab-register {
+      transform: translateX(100%);
+    }
+
+    .buzz-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .buzz-input-group {
+      text-align: left;
+    }
+
+    .buzz-input-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 0.4rem;
+    }
+
+    .buzz-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .buzz-input-icon {
+      position: absolute;
+      left: 1rem;
+      font-size: 1rem;
+      color: #818cf8;
+      pointer-events: none;
+    }
+
+    .buzz-input {
+      width: 100%;
+      padding: 0.8rem 1rem 0.8rem 2.65rem;
+      background: rgba(7, 8, 10, 0.75);
+      border: 1px solid rgba(129, 140, 248, 0.2);
+      border-radius: 14px;
+      color: white;
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .buzz-input:focus {
+      border-color: #818cf8;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .buzz-toggle-pwd {
+      position: absolute;
+      right: 0.85rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.25rem;
+    }
+
+    .buzz-toggle-pwd:hover {
+      color: #818cf8;
+    }
+
+    .buzz-form-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+    }
+
+    .buzz-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .buzz-checkbox-label input[type="checkbox"] {
+      accent-color: #6366f1;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .buzz-forgot-link {
+      color: #818cf8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .buzz-forgot-link:hover {
+      text-decoration: underline;
+    }
+
+    .buzz-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.25rem 0 1rem;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .buzz-divider::before, .buzz-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .buzz-divider span {
+      padding: 0 0.75rem;
+    }
+
+    .buzz-social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .buzz-social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .buzz-social-btn:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: rgba(129, 140, 248, 0.4);
+      color: #818cf8;
+    }
+
+  
+    /* BORDER BEAM EFFECT ON CARDS */
+    .beam-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .beam-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(99, 102, 241, 0.4) 60deg, transparent 120deg);
+      animation: rotateBeam 6s linear infinite;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+    .beam-card:hover::after {
+      opacity: 1;
+    }
+    @keyframes rotateBeam {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* GLOWING TEXT SHINE */
+    .gradient-text, .hero-title .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #818cf8 30%, #c084fc 60%, #38bdf8 100%) !important;
+      background-size: 250% auto !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      animation: textGlowShine 5s linear infinite alternate !important;
+    }
+    @keyframes textGlowShine {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* GLOWING PILL BADGES */
+    .hero-tag, .badge-pill, .section-badge {
+      position: relative;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+      animation: pillPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes pillPulse {
+      0%   { box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+      100% { box-shadow: 0 0 28px rgba(168, 85, 247, 0.45); }
+    }
+
+    /* FLOATING STAT CARDS */
+    .stat-card {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(99, 102, 241, 0.22) !important;
+    }
+    .stat-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      border-color: rgba(168, 85, 247, 0.7) !important;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.35) !important;
+    }
+
+    /* INTERACTIVE HOVER ON MODULE ITEMS */
+    .module-tile {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .module-tile:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: rgba(129, 140, 248, 0.6) !important;
+      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.25);
+    }
+
+  
+    /* TYPEWRITER ANIMATION FOR HERO TITLE */
+    .typewriter-cursor {
+      display: inline-block;
+      font-weight: 300;
+      color: #a855f7;
+      animation: blinkCursor 0.75s infinite;
+      margin-left: 4px;
+      vertical-align: baseline;
+      text-shadow: 0 0 12px #a855f7, 0 0 24px #6366f1;
+    }
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
   </style>
 </head>
 <body>
@@ -1221,16 +1879,16 @@
           <li><a href="#colaborativo">Estudio Activo</a></li>
           <li><a href="#semaforo">Semáforo de Uso</a></li>
           <li><a href="#simulador">Laboratorio</a></li>
-          <li><a href="#panel-estudiante">Mi panel</a></li>
-          <li><a href="#roadmap">Roadmap</a></li>
-          <li><a href="#registro">Atención Personalizada</a></li>
+          <li><a href="#registro" onclick="scrollToRegister(); return false;">Registro 9°</a></li>
+          <li><a href="panel.html" style="color:var(--primary-light); font-weight:700;">Menú Principal ➔</a></li>
         </ul>
       </nav>
       <div class="nav-actions">
-        <div class="user-pill" id="userPill" onclick="scrollToRegister()">
-          <span>👤</span> <span id="userPillName">Estudiante</span>
-        </div>
-        <a href="#registro" class="btn btn-primary btn-sm" id="btnNavRegister">Registrarme</a>
+        <a href="panel.html" class="user-pill" id="userPill" style="display:none; text-decoration:none;">
+          <span>🎓</span> <span id="userPillName">Menú Principal</span>
+        </a>
+        <button class="btn btn-secondary btn-sm" id="btnNavLogin" onclick="openAuthModal('login')">🔑 Iniciar Sesión</button>
+        <button class="btn btn-primary btn-sm" id="btnNavRegister" onclick="scrollToRegister()">⚡ Registrarse</button>
       </div>
     </div>
   </header>
@@ -1244,14 +1902,15 @@
           Curso Oficial de IA para Grado 9° en Colombia
         </div>
         <h2 class="hero-title">
-          Aprende a usar la IA <span class="gradient-text">sin perder tu autonomía</span> ni tus notas.
+          Aprende a usar la IA <span class="gradient-text" id="typewriterText"></span><span class="typewriter-cursor">|</span>
         </h2>
         <p class="hero-subtitle">
           El objetivo no es que la máquina haga tus tareas, sino que se convierta en tu <strong>entrenador socrático 24/7</strong>. Domina los 6 módulos oficiales del curso diseñados para el currículo de noveno y las pruebas <strong>Saber 9° / Icfes</strong>.
         </p>
         <div class="hero-cta">
-          <a href="#curso-completo" class="btn btn-primary">Comenzar los 6 Módulos</a>
-          <a href="#registro" class="btn btn-secondary">Recibir Tutoría Personalizada</a>
+          <button onclick="handleHeroAccess()" class="btn btn-primary" id="btnHeroAccess">🔑 Iniciar Sesión / Mi Panel</button>
+          <button onclick="scrollToRegister()" class="btn btn-secondary">⚡ Registrarse Gratis</button>
+          <a href="#curso-completo" class="btn btn-secondary">🚀 Explorar los 6 Módulos</a>
         </div>
 
         <div class="quick-stats">
@@ -1287,89 +1946,11 @@
     </div>
   </section>
 
-  <!-- SECCIÓN INTERACTIVA: LOS 6 MÓDULOS DEL CURSO OFICIAL -->
-  <!-- PANEL DEL ESTUDIANTE: ACCESO, PERSONALIZACIÓN Y PLAN DE TRABAJO -->
-  <section id="panel-estudiante" class="platform-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-badge">Zona privada del estudiante</span>
-        <h3 class="section-title">Tu centro de aprendizaje</h3>
-        <p class="section-desc">Inicia sesión o regístrate para ver tu progreso, personalizar la experiencia y organizar tus tareas.</p>
-      </div>
-      <div class="platform-shell">
-        <div id="loginView" class="panel-card">
-          <div class="panel-title">Entrar al panel</div>
-          <p class="panel-muted" style="margin-bottom:1rem;">Este acceso funciona en este dispositivo y conserva tu sesión localmente.</p>
-          <form id="studentLoginForm" class="login-box" onsubmit="handleLogin(event)">
-            <input class="form-control" id="loginEmail" type="email" placeholder="Tu correo registrado" required>
-            <input class="form-control" id="loginName" type="text" placeholder="Tu nombre o apodo" required>
-            <button class="btn btn-primary" type="submit">Entrar a mi panel</button>
-          </form>
-          <p id="loginMessage" class="panel-muted" style="margin-top:.75rem;"></p>
-          <a class="btn btn-secondary btn-sm" href="#registro" style="margin-top:.5rem; display:inline-flex;">Crear mi registro</a>
-        </div>
-
-        <div id="dashboardContent" style="display:none;">
-          <div class="dashboard-grid">
-            <div class="panel-card">
-              <div class="dashboard-user">
-                <div class="avatar">🎓</div>
-                <div>
-                  <div class="panel-muted">Bienvenido/a de nuevo</div>
-                  <div class="panel-title" id="dashboardName">Estudiante</div>
-                  <div class="panel-muted" id="dashboardSchool">Tu institución educativa</div>
-                </div>
-                <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="logoutStudent()">Salir</button>
-              </div>
-              <div class="panel-title">Ruta de módulos</div>
-              <p class="panel-muted">Continúa desde donde quedaste y abre directamente cada módulo.</p>
-              <div class="progress-track"><div class="progress-fill" id="dashboardProgressFill"></div></div>
-              <div class="panel-muted" id="dashboardProgressLabel">1 de 6 módulos</div>
-              <div class="module-track">
-                <div class="module-tile" onclick="openModuleFromDashboard(1)"><strong>01 · Autonomía</strong><small>Empezar con IA</small></div>
-                <div class="module-tile" onclick="openModuleFromDashboard(2)"><strong>02 · Verificar</strong><small>Preguntar y pensar</small></div>
-                <div class="module-tile" onclick="openModuleFromDashboard(3)"><strong>03 · Crear</strong><small>Sin copy-paste</small></div>
-                <div class="module-tile" onclick="openModuleFromDashboard(4)"><strong>04 · Estudiar</strong><small>Mejores notas</small></div>
-                <div class="module-tile" onclick="openModuleFromDashboard(5)"><strong>05 · Cuidar</strong><small>Privacidad y ética</small></div>
-                <div class="module-tile" onclick="openModuleFromDashboard(6)"><strong>06 · Proyecto</strong><small>Ruta final</small></div>
-              </div>
-            </div>
-            <div class="panel-card" id="configuracion">
-              <div class="panel-title">Configurar experiencia</div>
-              <p class="panel-muted">Ajusta brillo, tonalidad y contenido multimedia.</p>
-              <div class="setting-row"><label for="brightnessControl">Brillo de la interfaz</label><input id="brightnessControl" type="range" min="70" max="125" value="100" oninput="setBrightness(this.value)"></div>
-              <div class="setting-row"><label for="toneControl">Tonalidad</label><select id="toneControl" onchange="setTone(this.value)"><option value="cool">Azul nocturno</option><option value="warm">Cálida</option><option value="contrast">Alto contraste</option></select></div>
-              <div class="setting-row"><label for="mediaControl">Multimedia</label><select id="mediaControl" onchange="setMediaMode(this.value)"><option value="full">Imágenes y videos</option><option value="images">Solo imágenes</option><option value="minimal">Modo ligero</option></select></div>
-              <button class="btn btn-secondary btn-sm" style="margin-top:1rem;" onclick="resetSettings()">Restablecer ajustes</button>
-            </div>
-          </div>
-
-          <div id="roadmap" class="roadmap-layout">
-            <div class="panel-card">
-              <div class="panel-title">Construye tu roadmap</div>
-              <p class="panel-muted" style="margin-bottom:1rem;">Agrega una tarea y clasifica si la IA acompaña el proceso o si debes hacerla sin IA.</p>
-              <form class="roadmap-form" onsubmit="addRoadmapTask(event)">
-                <input class="form-control" id="taskTitle" type="text" placeholder="Ej: Practicar 5 ejercicios de álgebra" required>
-                <input class="form-control" id="taskDate" type="date">
-                <select class="form-control" id="taskType"><option value="no-ai">Sin uso de IA · práctica propia</option><option value="ai">Con uso de IA · tutoría o verificación</option></select>
-                <button class="btn btn-primary" type="submit">+ Añadir tarea</button>
-              </form>
-            </div>
-            <div class="panel-card">
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;"><div><div class="panel-title">Mis tareas</div><div class="panel-muted" id="taskSummary">0 tareas</div></div><button class="btn btn-secondary btn-sm" onclick="clearRoadmap()">Limpiar</button></div>
-              <div class="task-list" id="taskList" style="margin-top:1rem;"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="curso-completo">
     <div class="container">
       <div class="section-header">
         <span class="section-badge">Plan de Formación Oficial</span>
-        <h3 class="section-title">El Curso Completo: 6 Módulos de Aprendizaje</h3>
+        <h3 class="section-title typewriter-heading">El Curso Completo: 6 Módulos de Aprendizaje</h3>
         <p class="section-desc">
           Explora lección por lección cada uno de los módulos desarrollados en el programa. Lee el propósito, realiza la práctica guiada, copia los prompts oficiales y descarga el PDF para tu colegio.
         </p>
@@ -1937,7 +2518,7 @@
 
       <div>
         <span class="section-badge">Metodología de Aula</span>
-        <h3 class="section-title">El Conocimiento Humano se Comparte y se Defiende</h3>
+        <h3 class="section-title typewriter-heading">El Conocimiento Humano se Comparte y se Defiende</h3>
         <p style="color: #cbd5e1; font-size: 1.05rem; margin-bottom: 1.25rem;">
           Cuando trabajas en grupo en el salón de clases o en la biblioteca, la tecnología es un punto de partida para contrastar opiniones, formular hipótesis y preparar exposiciones reales.
         </p>
@@ -1964,7 +2545,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-badge">Criterio Rápido</span>
-        <h3 class="section-title">El Semáforo de la IA en el Colegio</h3>
+        <h3 class="section-title typewriter-heading">El Semáforo de la IA en el Colegio</h3>
         <p class="section-desc">
           Aprende a diferenciar al instante cuándo es seguro y enriquecedor apoyarte en la IA, cuándo tener precaución y cuándo está completamente prohibido.
         </p>
@@ -2013,7 +2594,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-badge">Laboratorio Interactivo</span>
-        <h3 class="section-title">Entrenador de Prompts: Trampa vs. Estrategia</h3>
+        <h3 class="section-title typewriter-heading">Entrenador de Prompts: Trampa vs. Estrategia</h3>
         <p class="section-desc">
           Prueba escribir una petición tal como se la mandarías a una IA o carga un caso de noveno grado para ver cómo transformarla en un prompt socrático.
         </p>
@@ -2055,69 +2636,70 @@
     </div>
   </section>
 
+  
   <!-- SECCIÓN DE REGISTRO Y ATENCIÓN PERSONALIZADA -->
   <section id="registro" class="register-section">
     <div class="container">
       <div class="register-card-grid">
         <div class="register-info">
-          <span class="section-badge">Atención Personalizada</span>
-          <h3 class="section-title">Inscríbete y Recibe Acompañamiento</h3>
-          <p style="color: #cbd5e1; font-size: 0.95rem;">
-            Regístrate como estudiante de grado 9° para guardar tu progreso en los 6 módulos, generar tu carné digital y recibir asesoría personalizada para tus exámenes y tareas.
+          <span class="section-badge">Atención Personalizada 9°</span>
+          <h3 class="section-title typewriter-heading">Inscríbete y Recibe Acompañamiento</h3>
+          <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem;">
+            Regístrate como estudiante de grado 9° para guardar tu progreso en los 6 módulos, generar tu carné digital y entrar a tu <strong>Menú Principal</strong> de aprendizaje con IA.
           </p>
-          <ul class="register-perks">
-            <li><span>⭐</span> Acceso a la biblioteca de prompts socráticos por materia.</li>
-            <li><span>📊</span> Seguimiento de progreso en los 6 módulos oficiales.</li>
-            <li><span>📱</span> Opción de resolver dudas por WhatsApp con un tutor educativo.</li>
-            <li><span>🎓</span> Carné virtual del "Estudiante Estratega 9°".</li>
+          <ul class="register-perks" style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.75rem; font-size: 0.9rem; color: #cbd5e1;">
+            <li style="display: flex; gap: 0.6rem; align-items: center;"><span>⭐</span> Acceso a la biblioteca de prompts socráticos por materia.</li>
+            <li style="display: flex; gap: 0.6rem; align-items: center;"><span>📊</span> Seguimiento de progreso en los 6 módulos oficiales del curso.</li>
+            <li style="display: flex; gap: 0.6rem; align-items: center;"><span>📱</span> Opción de resolver dudas por WhatsApp con un tutor educativo.</li>
+            <li style="display: flex; gap: 0.6rem; align-items: center;"><span>🎓</span> Carné virtual del "Estudiante Estratega 9°".</li>
           </ul>
 
           <!-- Carné Generado Dinámicamente -->
-          <div class="student-badge-card" id="studentBadgeCard">
-            <div class="badge-card-header">
+          <div class="student-badge-card" id="studentBadgeCard" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.95), rgba(15, 23, 42, 0.9)); border: 1px solid rgba(129, 140, 248, 0.4); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px rgba(99,102,241,0.25);">
+            <div class="badge-card-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
               <div>
-                <div class="badge-user-name" id="badgeName">Estudiante</div>
-                <div class="badge-user-school" id="badgeSchool">I.E. Colombia • Grado 9°</div>
+                <div class="badge-user-name" id="badgeName" style="font-size: 1.35rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: white;">Tu Nombre Aquí</div>
+                <div class="badge-user-school" id="badgeSchool" style="font-size: 0.85rem; color: var(--primary-light); font-weight: 600;">I.E. Concejo de Medellín • Grado 9°</div>
               </div>
               <div style="font-size: 2rem;">🎖️</div>
             </div>
-            <div style="font-size: 0.85rem; color: #94a3b8; display: flex; justify-content: space-between;">
-              <span>Materia clave: <strong id="badgeSubject" style="color: white;">Álgebra</strong></span>
+            <div style="font-size: 0.85rem; color: #94a3b8; display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.75rem;">
+              <span>Materia clave: <strong id="badgeSubject" style="color: white;">Matemáticas y Álgebra</strong></span>
               <span id="badgeCity" style="color: #60a5fa;">Colombia</span>
             </div>
-            <div style="margin-top: 0.75rem; font-size: 0.75rem; color: #34d399; font-weight: 700;">
-              ✔ ESTUDIANTE ESTRATEGA REGISTRADO
+            <div style="margin-top: 0.75rem; font-size: 0.75rem; color: #34d399; font-weight: 700; letter-spacing: 0.5px;">
+              ✔ ESTUDIANTE ESTRATEGA REGISTRADO 2026
             </div>
           </div>
         </div>
 
         <div>
-          <form id="studentRegisterForm" onsubmit="handleRegistration(event)">
-            <div class="form-row">
+          <form id="studentRegisterForm" onsubmit="handleRegistrationSubmit(event)" style="background: rgba(12, 10, 29, 0.75); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; backdrop-filter: blur(14px);">
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
               <div class="form-group">
-                <label>Tu Nombre Completo *</label>
-                <input type="text" class="form-control" id="regName" placeholder="Ej: Santiago Gómez" required>
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">Tu Nombre Completo *</label>
+                <input type="text" class="form-control" id="regName" placeholder="Ej: Santiago Gómez" required oninput="updateLiveBadge()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
               </div>
               <div class="form-group">
-                <label>¿Cómo te gusta que te llamen?</label>
-                <input type="text" class="form-control" id="regNickname" placeholder="Ej: Santi">
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label>Colegio / Institución Educativa *</label>
-                <input type="text" class="form-control" id="regSchool" placeholder="Ej: I.E. San José" required>
-              </div>
-              <div class="form-group">
-                <label>Ciudad o Municipio (Colombia) *</label>
-                <input type="text" class="form-control" id="regCity" placeholder="Ej: Medellín / Bogotá" required>
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">¿Cómo te gusta que te llamen?</label>
+                <input type="text" class="form-control" id="regNickname" placeholder="Ej: Santi" oninput="updateLiveBadge()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
               </div>
             </div>
 
-            <div class="form-group">
-              <label>Materia donde más necesitas mejorar en 9° *</label>
-              <select class="form-control" id="regSubject" required>
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+              <div class="form-group">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">Colegio / Institución Educativa *</label>
+                <input type="text" class="form-control" id="regSchool" placeholder="Ej: I.E. Concejo de Medellín" required oninput="updateLiveBadge()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
+              </div>
+              <div class="form-group">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">Ciudad o Municipio (Colombia) *</label>
+                <input type="text" class="form-control" id="regCity" placeholder="Ej: Medellín" required oninput="updateLiveBadge()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">Materia donde más necesitas mejorar en 9° *</label>
+              <select class="form-control" id="regSubject" required onchange="updateLiveBadge()" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: #0c0a1d; border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
                 <option value="Matemáticas y Álgebra">📐 Matemáticas y Álgebra (Factorización, funciones)</option>
                 <option value="Español y Ensayos">📖 Español y Ensayos (Lectura Crítica)</option>
                 <option value="Ciencias Naturales">🧪 Ciencias Naturales (Química, genética)</option>
@@ -2126,30 +2708,30 @@
               </select>
             </div>
 
-            <div class="form-row">
+            <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
               <div class="form-group">
-                <label>Correo Electrónico *</label>
-                <input type="email" class="form-control" id="regEmail" placeholder="tucorreo@ejemplo.com" required>
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">Correo Electrónico *</label>
+                <input type="email" class="form-control" id="regEmail" placeholder="tucorreo@estudiante.edu.co" required style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
               </div>
               <div class="form-group">
-                <label>WhatsApp (Opcional para tutoría)</label>
-                <input type="tel" class="form-control" id="regWhatsapp" placeholder="300 123 4567">
+                <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">WhatsApp (Opcional tutoría)</label>
+                <input type="tel" class="form-control" id="regWhatsapp" placeholder="300 123 4567" style="width: 100%; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none;">
               </div>
             </div>
 
-            <div class="form-group">
-              <label>¿Cuál es tu mayor desafío actual con las tareas y la IA?</label>
-              <textarea class="form-control" id="regChallenge" style="height: 65px;" placeholder="Ej: A veces me gana la pereza y copio la respuesta sin entender el procedimiento..."></textarea>
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem; color: #cbd5e1;">¿Cuál es tu mayor desafío actual con las tareas y la IA?</label>
+              <textarea class="form-control" id="regChallenge" style="width: 100%; height: 65px; padding: 0.75rem 1rem; border-radius: 12px; background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.3); color: white; outline: none; resize: none;" placeholder="Ej: A veces me cuesta saber si la respuesta de la IA es confiable o cómo redactar por mi cuenta..."></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.85rem;">
-              Guardar Mi Registro y Activar Perfil
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem;">
+              🚀 Guardar Registro y Entrar al Menú Principal ➔
             </button>
           </form>
 
           <!-- Botón de Contacto Rápido / WhatsApp -->
           <div style="margin-top: 1rem; text-align: center;">
-            <a id="btnWhatsappTutor" href="#" target="_blank" class="btn btn-secondary btn-sm" style="width: 100%; display: none;">
+            <a id="btnWhatsappTutor" href="#" target="_blank" class="btn btn-secondary btn-sm" style="display: none;">
               💬 Enviar consulta directa a un tutor por WhatsApp
             </a>
           </div>
@@ -2558,7 +3140,7 @@
           vy: (Math.random() - 0.5) * 0.7,
           vz: (Math.random() - 0.5) * 0.4,
           size: Math.random() * 2 + 1,
-          color: Math.random() > 0.5 ? '#60a5fa' : (Math.random() > 0.5 ? '#c084fc' : '#10b981')
+          color: ['#6366f1','#818cf8','#a855f7','#c084fc','#38bdf8','#e879f9'][Math.floor(Math.random()*6)]
         });
       }
 
@@ -2693,5 +3275,588 @@
       loadSimCase(1);
     });
   </script>
+
+  <!-- BUZZ AUTHENTICATION MODAL -->
+  <div class="buzz-modal-overlay" id="authModal" onclick="handleOverlayClick(event)">
+    <div class="buzz-modal-card">
+      <button class="buzz-modal-close" onclick="closeAuthModal()" aria-label="Cerrar modal">×</button>
+      
+      <div class="buzz-modal-header">
+        <div class="buzz-modal-brand">⚡ Volver a Aprender · Plataforma 9°</div>
+        <h3 class="buzz-modal-title" id="authModalTitle">Bienvenido/a</h3>
+        <p class="buzz-modal-subtitle" id="authModalSubtitle">Accede a tu panel, carné digital y mapa de tareas</p>
+      </div>
+
+      <div class="auth-tab-bar">
+        <div class="auth-tab-indicator" id="authTabIndicator"></div>
+        <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthTab('login')">🔑 Iniciar Sesión</button>
+        <a href="registro.html" class="auth-tab-btn" style="text-decoration:none; text-align:center;">📝 Crear Cuenta</a>
+      </div>
+
+      <!-- INICIAR SESIÓN FORM -->
+      <form id="modalLoginForm" class="buzz-form" onsubmit="handleModalLogin(event)">
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Correo Electrónico</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">✉️</span>
+            <input type="email" id="modalLoginEmail" class="buzz-input" placeholder="tu.correo@estudiante.edu.co" required>
+          </div>
+        </div>
+
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Contraseña</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">🔒</span>
+            <input type="password" id="modalLoginPwd" class="buzz-input" placeholder="••••••••" required>
+            <button type="button" class="buzz-toggle-pwd" onclick="togglePasswordVisibility('modalLoginPwd', this)">👁️</button>
+          </div>
+        </div>
+
+        <div class="buzz-form-row">
+          <label class="buzz-checkbox-label">
+            <input type="checkbox" id="modalRemember" checked> Recordarme
+          </label>
+          <a href="#" class="buzz-forgot-link" onclick="alert('Ingresa con tu correo registrado o crea un nuevo perfil de estudiante.'); return false;">¿Olvidaste tu clave?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          ⚡ Iniciar Sesión ➔
+        </button>
+
+        <div class="buzz-divider"><span>o accede con tu identidad digital</span></div>
+
+        <div class="buzz-social-grid">
+          <button type="button" class="buzz-social-btn" onclick="handleSocialAuth('Google')">
+            <span>🌐</span> Google
+          </button>
+          <button type="button" class="buzz-social-btn" onclick="handleSocialAuth('Nostr Key')">
+            <span>🔑</span> Clave Digital
+          </button>
+        </div>
+      </form>
+
+      <!-- CREAR CUENTA FORM -->
+      <form id="modalRegisterForm" class="buzz-form" style="display:none;" onsubmit="handleModalRegister(event)">
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Nombre Completo *</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">👤</span>
+            <input type="text" id="modalRegName" class="buzz-input" placeholder="Ej: Andrés Sánchez Molina" required>
+          </div>
+        </div>
+
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Colegio / Institución Educativa *</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">🏫</span>
+            <input type="text" id="modalRegSchool" class="buzz-input" placeholder="Ej: I.E. Concejo de Medellín" required>
+          </div>
+        </div>
+
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Correo Electrónico *</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">✉️</span>
+            <input type="email" id="modalRegEmail" class="buzz-input" placeholder="tu.correo@estudiante.edu.co" required>
+          </div>
+        </div>
+
+        <div class="buzz-input-group">
+          <label class="buzz-input-label">Contraseña *</label>
+          <div class="buzz-input-wrapper">
+            <span class="buzz-input-icon">🔒</span>
+            <input type="password" id="modalRegPwd" class="buzz-input" placeholder="Crea una contraseña segura" required>
+            <button type="button" class="buzz-toggle-pwd" onclick="togglePasswordVisibility('modalRegPwd', this)">👁️</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          🚀 Crear Cuenta y Activar Carné ➔
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+
+  <script>
+    // BUZZ AUTH MODAL JS CONTROLLER
+    function openAuthModal(tab = 'login') {
+      const modal = document.getElementById('authModal');
+      if (!modal) return;
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      switchAuthTab(tab);
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('authModal');
+      if (!modal) return;
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target.id === 'authModal') closeAuthModal();
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAuthModal();
+    });
+
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('modalLoginForm');
+      const registerForm = document.getElementById('modalRegisterForm');
+      const tabIndicator = document.getElementById('authTabIndicator');
+      const tabLoginBtn = document.getElementById('tabLoginBtn');
+      const tabRegisterBtn = document.getElementById('tabRegisterBtn');
+      const title = document.getElementById('authModalTitle');
+      const subtitle = document.getElementById('authModalSubtitle');
+
+      if (tab === 'login') {
+        loginForm.style.display = 'flex';
+        registerForm.style.display = 'none';
+        tabIndicator.classList.remove('tab-register');
+        tabLoginBtn.classList.add('active');
+        tabRegisterBtn.classList.remove('active');
+        title.innerText = 'Iniciar Sesión';
+        subtitle.innerText = 'Accede a tu panel, carné digital y mapa de tareas';
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'flex';
+        tabIndicator.classList.add('tab-register');
+        tabRegisterBtn.classList.add('active');
+        tabLoginBtn.classList.remove('active');
+        title.innerText = 'Crear Cuenta';
+        subtitle.innerText = 'Regístrate gratis como estudiante de Grado 9°';
+      }
+    }
+
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.innerText = '🙈';
+      } else {
+        input.type = 'password';
+        btn.innerText = '👁️';
+      }
+    }
+
+    function handleModalLogin(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const email = document.getElementById('modalLoginEmail').value.trim();
+      const stored = readStoredJSON('studentProfile', null);
+
+      let profile = stored;
+      if (!profile || (profile.email && profile.email.toLowerCase() !== email.toLowerCase())) {
+        const nameFromEmail = email.split('@')[0].replace('.', ' ');
+        const cleanName = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+        profile = {
+          name: cleanName,
+          nickname: cleanName,
+          school: 'I.E. Concejo de Medellín',
+          city: 'Medellín',
+          subject: 'Matemáticas y Álgebra',
+          email: email,
+          registeredAt: new Date().toISOString()
+        };
+        localStorage.setItem('studentProfile', JSON.stringify(profile));
+      }
+
+      renderStudentProfile(profile);
+      closeAuthModal();
+      showToast(`⚡ ¡Bienvenido/a, ${profile.nickname || profile.name}! Abriendo tu panel...`);
+      setTimeout(() => { window.location.href = 'panel.html'; }, 700);
+    }
+
+    function handleModalRegister(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const name = document.getElementById('modalRegName').value.trim();
+      const school = document.getElementById('modalRegSchool').value.trim();
+      const email = document.getElementById('modalRegEmail').value.trim();
+      const nickname = name.split(' ')[0];
+
+      const profile = {
+        name, nickname, school, city: 'Medellín', subject: 'Matemáticas y Álgebra', email,
+        registeredAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('studentProfile', JSON.stringify(profile));
+      renderStudentProfile(profile);
+      showDashboard();
+      closeAuthModal();
+      showToast(`⚡ ¡Registro exitoso, ${nickname}! Tu carné y panel están listos.`);
+    }
+
+    function handleSocialAuth(provider) {
+      const email = `estudiante.${Math.floor(Math.random()*899+100)}@colombia.edu.co`;
+      document.getElementById('modalLoginEmail').value = email;
+      showToast(`🔑 Autenticando con ${provider}...`);
+      setTimeout(() => {
+        handleModalLogin(new Event('submit'));
+      }, 700);
+    }
+
+    function showToast(msg) {
+      let toast = document.querySelector('.toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.className = 'toast';
+        document.body.appendChild(toast);
+      }
+      toast.innerText = msg;
+      toast.classList.add('is-visible');
+      setTimeout(() => { toast.classList.remove('is-visible'); }, 3500);
+    }
+  </script>
+
+
+  <script>
+    // ============================================================
+    // MEGA ANIMATION ENGINE — 400% INTERACTIVITY & PHYSICS
+    // ============================================================
+
+    // 1. FLUID MAGNETIC CURSOR GLOW (SMOOTH LERP)
+    (function() {
+      const glow = document.getElementById('cursorGlow');
+      if (!glow || window.innerWidth < 768) return;
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let glowX = mouseX, glowY = mouseY;
+      
+      window.addEventListener('mousemove', e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function renderGlow() {
+        glowX += (mouseX - glowX) * 0.075;
+        glowY += (mouseY - glowY) * 0.075;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(renderGlow);
+      }
+      renderGlow();
+    })();
+
+    // 2. MAGNETIC ATTRACTION ON BUTTONS & PILLS
+    (function() {
+      if (window.innerWidth < 768) return;
+      const magnetics = document.querySelectorAll('.btn, .logo-box, .sim-chip');
+      magnetics.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+          const rect = el.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const dx = (e.clientX - cx) * 0.25;
+          const dy = (e.clientY - cy) * 0.25;
+          el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(1.03)`;
+        });
+        el.addEventListener('mouseleave', () => {
+          el.style.transform = 'translate3d(0, 0, 0) scale(1)';
+          el.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+          setTimeout(() => { el.style.transition = ''; }, 400);
+        });
+      });
+    })();
+
+    // 3. DYNAMIC BUTTON RIPPLE
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.btn');
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const circle = document.createElement('span');
+      const diameter = Math.max(rect.width, rect.height);
+      const radius = diameter / 2;
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${e.clientX - rect.left - radius}px`;
+      circle.style.top = `${e.clientY - rect.top - radius}px`;
+      circle.classList.add('ripple');
+      const rippleEl = btn.getElementsByClassName('ripple')[0];
+      if (rippleEl) rippleEl.remove();
+      btn.appendChild(circle);
+    });
+
+    // 4. HEADER MORPH ON SCROLL
+    (function() {
+      const header = document.querySelector('header');
+      if (!header) return;
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 40) {
+          header.classList.add('scrolled');
+          header.style.background = 'rgba(5, 5, 18, 0.94)';
+          header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.2)';
+        } else {
+          header.classList.remove('scrolled');
+          header.style.background = 'rgba(5, 5, 18, 0.85)';
+          header.style.boxShadow = 'none';
+        }
+      });
+    })();
+
+    // 5. PARALLAX DRIFT ON AMBIENT ORBS
+    (function() {
+      const orbs = document.querySelectorAll('.gradient-mesh-bg .orb');
+      if (!orbs.length || window.innerWidth < 768) return;
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        orbs.forEach((orb, i) => {
+          const factor = (i + 1) * 0.04;
+          orb.style.transform = `translate3d(0, ${scrolled * factor}px, 0)`;
+        });
+      }, { passive: true });
+    })();
+
+    // 6. ANIMATED COUNTERS FOR STAT NUMBERS
+    (function() {
+      const statElements = document.querySelectorAll('.stat-num');
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          if (el.dataset.hasAnimated) return;
+          el.dataset.hasAnimated = 'true';
+          const origText = el.innerText.trim();
+          const match = origText.match(/^([\d]+)(.*)$/);
+          if (match) {
+            const targetVal = parseInt(match[1], 10);
+            const suffix = match[2];
+            let current = 0;
+            const duration = 1200;
+            const startTime = performance.now();
+            function step(time) {
+              const progress = Math.min((time - startTime) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3); // cubic ease out
+              current = Math.floor(eased * targetVal);
+              el.innerText = current + suffix;
+              if (progress < 1) requestAnimationFrame(step);
+              else el.innerText = origText;
+            }
+            requestAnimationFrame(step);
+          }
+        });
+      }, { threshold: 0.3 });
+      statElements.forEach(el => obs.observe(el));
+    })();
+
+    // 7. STAGGER REVEALS ON ALL GRIDS
+    (function() {
+      const grids = document.querySelectorAll('.quick-stats, .module-track, .core-callouts, .path-grid, .bullet-grid');
+      grids.forEach(grid => grid.classList.add('stagger-children'));
+      const staggerObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add('is-visible');
+        });
+      }, { threshold: 0.15 });
+      grids.forEach(grid => staggerObs.observe(grid));
+    })();
+  </script>
+
+
+  <script>
+    // TYPEWRITER ANIMATION FOR HERO TITLE
+    (function initTypewriter() {
+      const target = document.getElementById('typewriterText');
+      if (!target) return;
+      const fullText = "sin perder tu autonomía ni tus notas.";
+      let charIndex = 0;
+      target.textContent = "";
+
+      function typeChar() {
+        if (charIndex < fullText.length) {
+          target.textContent += fullText.charAt(charIndex);
+          charIndex++;
+          const delay = Math.floor(Math.random() * 30) + 40;
+          setTimeout(typeChar, delay);
+        }
+      }
+      setTimeout(typeChar, 350);
+    })();
+
+    function handleHeroAccess() {
+      const profile = readStoredJSON('studentProfile', null);
+      if (profile && profile.name) {
+        window.location.href = 'panel.html';
+      } else {
+        openAuthModal('login');
+      }
+    }
+
+    // CHECK IF LOGGED IN AND UPDATE HEADER
+    (function checkLoginHeader() {
+      const profile = readStoredJSON('studentProfile', null);
+      if (profile && profile.name) {
+        const userPill = document.getElementById('userPill');
+        const userPillName = document.getElementById('userPillName');
+        const btnNavLogin = document.getElementById('btnNavLogin');
+        const btnHeroAccess = document.getElementById('btnHeroAccess');
+
+        if (userPill && userPillName) {
+          userPill.style.display = 'inline-flex';
+          userPillName.textContent = `Panel · ${profile.nickname || profile.name.split(' ')[0]}`;
+        }
+        if (btnNavLogin) {
+          btnNavLogin.textContent = '🎓 Ir a mi Panel';
+          btnNavLogin.onclick = () => { window.location.href = 'panel.html'; };
+        }
+        if (btnHeroAccess) {
+          btnHeroAccess.textContent = '🎓 Abrir Mi Panel de Estudiante';
+        }
+      }
+    })();
+  </script>
+
+
+  <script>
+    // -------------------------------------------------------------
+    // 1. SCROLL TO REGISTER FUNCTION
+    // -------------------------------------------------------------
+    function scrollToRegister() {
+      const reg = document.getElementById('registro');
+      if (reg) {
+        reg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const nameInput = document.getElementById('regName');
+        if (nameInput) setTimeout(() => nameInput.focus(), 600);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // 2. LIVE BADGE PREVIEW
+    // -------------------------------------------------------------
+    function updateLiveBadge() {
+      const name = document.getElementById('regName').value.trim();
+      const nickname = document.getElementById('regNickname').value.trim();
+      const school = document.getElementById('regSchool').value.trim();
+      const city = document.getElementById('regCity').value.trim();
+      const subject = document.getElementById('regSubject').value;
+
+      const badgeName = document.getElementById('badgeName');
+      const badgeSchool = document.getElementById('badgeSchool');
+      const badgeCity = document.getElementById('badgeCity');
+      const badgeSubject = document.getElementById('badgeSubject');
+
+      if (badgeName) badgeName.innerText = nickname || name || 'Tu Nombre Aquí';
+      if (badgeSchool) badgeSchool.innerText = `${school || 'I.E. Concejo de Medellín'} • Grado 9°`;
+      if (badgeCity) badgeCity.innerText = city || 'Colombia';
+      if (badgeSubject) badgeSubject.innerText = subject;
+    }
+
+    // -------------------------------------------------------------
+    // 3. REGISTRATION SUBMIT -> REDIRECT TO MENÚ PRINCIPAL
+    // -------------------------------------------------------------
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value.trim();
+      const nickname = document.getElementById('regNickname').value.trim() || name.split(' ')[0];
+      const school = document.getElementById('regSchool').value.trim();
+      const city = document.getElementById('regCity').value.trim();
+      const subject = document.getElementById('regSubject').value;
+      const email = document.getElementById('regEmail').value.trim();
+      const whatsapp = document.getElementById('regWhatsapp').value.trim();
+      const challenge = document.getElementById('regChallenge').value.trim();
+
+      const studentProfile = {
+        name, nickname, school, city, subject, email, whatsapp, challenge,
+        registeredAt: new Date().toISOString()
+      };
+
+      localStorage.setItem('studentProfile', JSON.stringify(studentProfile));
+      showToast(`⚡ ¡Bienvenido/a, ${nickname}! Tu perfil fue creado. Entrando a tu Menú Principal...`);
+
+      setTimeout(() => {
+        window.location.href = 'panel.html';
+      }, 750);
+    }
+
+    // -------------------------------------------------------------
+    // 4. TYPEWRITER ENGINE FOR VISIBLE HEADINGS (h1 through h3)
+    // -------------------------------------------------------------
+    (function initTypewriterEngine() {
+      // Hero headline typewriter
+      const heroTarget = document.getElementById('typewriterText');
+      if (heroTarget) {
+        const fullHero = "sin perder tu autonomía ni tus notas.";
+        let hIdx = 0;
+        heroTarget.textContent = "";
+        function typeHero() {
+          if (hIdx < fullHero.length) {
+            heroTarget.textContent += fullHero.charAt(hIdx);
+            hIdx++;
+            setTimeout(typeHero, 38 + Math.random() * 25);
+          }
+        }
+        setTimeout(typeHero, 350);
+      }
+
+      // Section titles typewriter on scroll visibility
+      const headings = document.querySelectorAll('.typewriter-heading, h2.section-title, h3.section-title');
+      
+      const twObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            if (el.dataset.hasTyped) return;
+            el.dataset.hasTyped = 'true';
+
+            const rawText = el.innerText.trim();
+            if (!rawText) return;
+
+            // Preserve container height to avoid layout shift
+            const prevHeight = el.offsetHeight;
+            el.style.minHeight = prevHeight ? prevHeight + 'px' : 'auto';
+            el.innerHTML = '<span class="tw-chars"></span><span class="typewriter-cursor">|</span>';
+            const charSpan = el.querySelector('.tw-chars');
+            const cursorSpan = el.querySelector('.typewriter-cursor');
+
+            let charIdx = 0;
+            const typingSpeed = Math.max(22, Math.min(45, Math.floor(1200 / rawText.length)));
+
+            function typeNext() {
+              if (charIdx < rawText.length) {
+                charSpan.textContent += rawText.charAt(charIdx);
+                charIdx++;
+                setTimeout(typeNext, typingSpeed + (Math.random() * 12));
+              } else {
+                setTimeout(() => {
+                  if (cursorSpan) cursorSpan.style.display = 'none';
+                  el.style.minHeight = '';
+                }, 1800);
+              }
+            }
+            typeNext();
+          }
+        });
+      }, { threshold: 0.25 });
+
+      headings.forEach(h => twObserver.observe(h));
+    })();
+
+    // -------------------------------------------------------------
+    // 5. UPDATE HEADER IF LOGGED IN
+    // -------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      const profile = readStoredJSON('studentProfile', null);
+      if (profile && profile.name) {
+        const userPill = document.getElementById('userPill');
+        const userPillName = document.getElementById('userPillName');
+        const btnNavLogin = document.getElementById('btnNavLogin');
+        const btnHeroAccess = document.getElementById('btnHeroAccess');
+
+        if (userPill && userPillName) {
+          userPill.style.display = 'inline-flex';
+          userPillName.textContent = `Menú · ${profile.nickname || profile.name.split(' ')[0]}`;
+        }
+        if (btnNavLogin) {
+          btnNavLogin.textContent = '🎓 Menú Principal';
+          btnNavLogin.onclick = () => { window.location.href = 'panel.html'; };
+        }
+        if (btnHeroAccess) {
+          btnHeroAccess.textContent = '🎓 Ir a mi Menú Principal';
+        }
+      }
+    });
+  </script>
+
 </body>
 </html>
