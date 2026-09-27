@@ -43,14 +43,24 @@
     .ambient-orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(90px);
+      filter: blur(75px);
       pointer-events: none;
       z-index: 0;
+      will-change: transform;
     }
-    .orb-1 { width: 450px; height: 450px; top: -100px; left: -100px; background: rgba(99, 102, 241, 0.25); animation: float1 14s infinite alternate ease-in-out; }
-    .orb-2 { width: 400px; height: 400px; bottom: -80px; right: -80px; background: rgba(168, 85, 247, 0.22); animation: float2 16s infinite alternate ease-in-out; }
-    @keyframes float1 { 0% { transform: translate(0, 0); } 100% { transform: translate(60px, 40px); } }
-    @keyframes float2 { 0% { transform: translate(0, 0); } 100% { transform: translate(-50px, -50px); } }
+    .orb-1 { width: 420px; height: 420px; top: -90px; left: -90px; background: rgba(99, 102, 241, 0.22); animation: float1 14s infinite alternate ease-in-out; }
+    .orb-2 { width: 360px; height: 360px; bottom: -70px; right: -70px; background: rgba(168, 85, 247, 0.18); animation: float2 16s infinite alternate ease-in-out; }
+    @keyframes float1 { 0% { transform: translate(0, 0); } 100% { transform: translate(50px, 30px); } }
+    @keyframes float2 { 0% { transform: translate(0, 0); } 100% { transform: translate(-40px, -40px); } }
+
+    @media (max-width: 768px) {
+      .ambient-orb { filter: blur(35px); }
+      .orb-1 { width: 240px; height: 240px; }
+      .orb-2 { width: 210px; height: 210px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ambient-orb, .student-badge-preview::after { animation: none !important; }
+    }
 
     header {
       position: sticky;
@@ -190,7 +200,7 @@
     .student-badge-preview::after {
       content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
       background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(168, 85, 247, 0.25) 60deg, transparent 120deg);
-      animation: badgeBeam 8s linear infinite; pointer-events: none;
+      animation: badgeBeam 8s linear infinite; pointer-events: none; will-change: transform;
     }
     @keyframes badgeBeam { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -212,6 +222,8 @@
       letter-spacing: 0.05em; display: flex; align-items: center; gap: 0.4rem;
       position: relative; z-index: 1;
     }
+
+
 
     .perks-card {
       background: rgba(12, 10, 29, 0.6);
@@ -342,6 +354,8 @@
         </div>
       </div>
 
+
+
       <div class="perks-card">
         <h4>Beneficios incluidos al registrarte:</h4>
         <ul class="perks-list">
@@ -400,6 +414,41 @@
       toast.classList.add('show');
       setTimeout(() => { toast.classList.remove('show'); }, 3000);
     }
+
+    function escapeHTML(str) {
+      return String(str || '').replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      let saved = null;
+      try { saved = JSON.parse(localStorage.getItem('studentProfile')); } catch (e) {}
+
+      if (saved && saved.name) {
+        document.getElementById('regName').value = saved.name || '';
+        document.getElementById('regNickname').value = saved.nickname || '';
+        document.getElementById('regSchool').value = saved.school || '';
+        document.getElementById('regCity').value = saved.city || '';
+        if (saved.subject) document.getElementById('regSubject').value = saved.subject;
+        document.getElementById('regEmail').value = saved.email || '';
+        if (saved.whatsapp) document.getElementById('regWhatsapp').value = saved.whatsapp;
+        if (saved.challenge) document.getElementById('regChallenge').value = saved.challenge;
+        updateBadgePreview();
+
+        const header = document.querySelector('.register-header');
+        if (header) {
+          const banner = document.createElement('div');
+          banner.style.cssText = 'background:rgba(99,102,241,0.18); border:1px solid rgba(129,140,248,0.45); border-radius:14px; padding:1rem 1.25rem; margin-bottom:1.5rem; display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;';
+          banner.innerHTML = `
+            <div>
+              <div style="font-weight:800; color:white; font-size:0.95rem;">👋 ¡Hola, ${escapeHTML(saved.nickname || saved.name)}!</div>
+              <div style="font-size:0.85rem; color:#cbd5e1;">Ya tienes un perfil registrado en este equipo.</div>
+            </div>
+            <a href="panel.html" class="btn btn-primary btn-sm">🎓 Ir a Mi Panel ➔</a>
+          `;
+          header.parentNode.insertBefore(banner, header.nextSibling);
+        }
+      }
+    });
   </script>
 </body>
 </html>

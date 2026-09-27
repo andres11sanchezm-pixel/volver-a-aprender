@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menú Principal del Estudiante | Volver a Aprender 9°</title>
+  <meta name="description" content="Panel y menú principal del estudiante: acceso interactivo a los 6 módulos oficiales del curso de IA para 9° grado, simulador de prompts y carné virtual.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,6 +17,8 @@
       --accent-purple: #a855f7;
       --accent-cyan: #38bdf8;
       --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
       --bg-dark: #040217;
       --bg-card: #0c0a22;
       --bg-card-hover: #151036;
@@ -34,8 +37,8 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.25), transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.2), transparent 50%);
+        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.22), transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(168, 85, 247, 0.18), transparent 50%);
       color: var(--text-main);
       min-height: 100vh;
       overflow-x: hidden;
@@ -43,16 +46,19 @@
       flex-direction: column;
     }
 
+    /* AMBIENT ORBS OPTIMIZADOS PARA RENDIMIENTO */
     .ambient-orb {
-      position: fixed; border-radius: 50%; filter: blur(95px); pointer-events: none; z-index: 0;
+      position: fixed; border-radius: 50%; filter: blur(75px); pointer-events: none; z-index: 0;
+      will-change: transform;
     }
-    .orb-1 { width: 500px; height: 500px; top: -120px; right: -80px; background: rgba(99, 102, 241, 0.22); }
-    .orb-2 { width: 450px; height: 450px; bottom: -80px; left: -100px; background: rgba(168, 85, 247, 0.18); }
+    .orb-1 { width: 440px; height: 440px; top: -100px; right: -70px; background: rgba(99, 102, 241, 0.2); }
+    .orb-2 { width: 380px; height: 380px; bottom: -70px; left: -80px; background: rgba(168, 85, 247, 0.16); }
 
     /* HEADER */
     header {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(4, 2, 23, 0.88); backdrop-filter: blur(16px);
+      background: rgba(4, 2, 23, 0.92); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color); padding: 0.85rem 1.5rem;
     }
     .nav-container {
@@ -66,7 +72,7 @@
       background: linear-gradient(135deg, #6366f1, #a855f7);
       width: 42px; height: 42px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; font-weight: 900; box-shadow: 0 0 22px rgba(99, 102, 241, 0.5);
+      font-size: 1.3rem; font-weight: 900; box-shadow: 0 0 20px rgba(99, 102, 241, 0.45);
     }
     .logo-text h1 { font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 800; }
     .logo-text span { font-size: 0.72rem; color: var(--primary-light); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
@@ -84,7 +90,8 @@
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
       padding: 0.65rem 1.35rem; border-radius: 9999px; font-weight: 700; font-size: 0.9rem;
-      cursor: pointer; text-decoration: none; transition: all 0.25s ease; border: none;
+      cursor: pointer; text-decoration: none; transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      border: none;
     }
     .btn-secondary {
       background: rgba(255, 255, 255, 0.05); color: white; border: 1px solid var(--border-color);
@@ -92,11 +99,11 @@
     .btn-secondary:hover { background: rgba(99, 102, 241, 0.15); border-color: var(--primary-light); transform: translateY(-2px); }
     .btn-primary {
       background: linear-gradient(135deg, #6366f1, #8b5cf6); color: white;
-      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+      box-shadow: 0 4px 18px rgba(99, 102, 241, 0.35);
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #818cf8, #a855f7); transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+      background: linear-gradient(135deg, #818cf8, #a855f7); transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(99, 102, 241, 0.48);
     }
     .btn-sm { padding: 0.45rem 1rem; font-size: 0.82rem; }
 
@@ -112,12 +119,12 @@
       border-radius: var(--radius-lg);
       padding: 2.25rem 2.5rem;
       margin-bottom: 2.5rem;
-      box-shadow: 0 25px 70px rgba(0,0,0,0.6), 0 0 40px rgba(99, 102, 241, 0.18);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 35px rgba(99, 102, 241, 0.15);
       position: relative; overflow: hidden;
     }
     .menu-hero::after {
-      content: ''; position: absolute; right: -10%; top: -30%; width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+      content: ''; position: absolute; right: -10%; top: -30%; width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(168, 85, 247, 0.22), transparent 70%);
       pointer-events: none;
     }
 
@@ -125,12 +132,40 @@
       display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; flex-wrap: wrap;
       margin-bottom: 1.5rem; position: relative; z-index: 1;
     }
+    .menu-hero-grid {
+      display: grid; grid-template-columns: 1.25fr 0.85fr; gap: 2rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .panel-photo-card {
+      border-radius: 18px; overflow: hidden; border: 1px solid rgba(129, 140, 248, 0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(99, 102, 241, 0.2);
+      position: relative; background: #0f172a;
+    }
+    .panel-photo-card img {
+      width: 100%; height: 230px; object-fit: cover; display: block; transition: transform 0.3s ease;
+    }
+    .panel-photo-card:hover img { transform: scale(1.02); }
+    .panel-photo-badge {
+      position: absolute; bottom: 0.85rem; left: 0.85rem; right: 0.85rem;
+      background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.12); padding: 0.75rem 1rem; border-radius: 12px;
+    }
+    .panel-photo-badge .badge-title {
+      font-weight: 700; color: #93c5fd; font-size: 0.82rem; display: flex; align-items: center; gap: 0.35rem; margin-bottom: 0.2rem;
+    }
+    .panel-photo-badge .badge-sub {
+      font-size: 0.74rem; color: #cbd5e1; line-height: 1.35;
+    }
+    @media (max-width: 900px) {
+      .menu-hero-grid { grid-template-columns: 1fr; }
+      .panel-photo-card img { height: 200px; }
+    }
     .hero-user-info { display: flex; align-items: center; gap: 1.25rem; }
     .hero-avatar {
       width: 68px; height: 68px; border-radius: 20px;
       background: linear-gradient(135deg, #6366f1, #a855f7);
       display: grid; place-items: center; font-size: 2rem;
-      box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
+      box-shadow: 0 0 22px rgba(99, 102, 241, 0.5);
     }
     .hero-welcome-badge {
       display: inline-flex; align-items: center; gap: 0.4rem;
@@ -157,7 +192,7 @@
     }
     .progress-fill {
       height: 100%; width: 0%; background: linear-gradient(90deg, #6366f1, #a855f7, #38bdf8);
-      border-radius: inherit; transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      border-radius: inherit; transition: width 0.5s ease;
     }
 
     /* SECTION HEADINGS IN MENU */
@@ -171,18 +206,21 @@
 
     /* MODULES GRID - THE CORE OF THE MENU */
     .modules-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem;
     }
     .module-card {
       background: var(--bg-card); border: 1px solid var(--border-color);
       border-radius: var(--radius-md); padding: 1.75rem; display: flex; flex-direction: column;
-      justify-content: space-between; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative; overflow: hidden;
+      justify-content: space-between; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative; overflow: hidden; cursor: pointer;
     }
     .module-card:hover {
-      transform: translateY(-6px); border-color: var(--border-hover);
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(99, 102, 241, 0.25);
+      transform: translateY(-5px); border-color: var(--border-hover);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 25px rgba(99, 102, 241, 0.2);
       background: var(--bg-card-hover);
+    }
+    .module-card.completed {
+      border-color: rgba(16, 185, 129, 0.45);
     }
     .mod-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
     .mod-number {
@@ -190,9 +228,20 @@
       background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(129, 140, 248, 0.35);
       display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: white;
     }
+    .module-card.completed .mod-number {
+      background: rgba(16, 185, 129, 0.18); border-color: rgba(16, 185, 129, 0.45); color: #34d399;
+    }
+    .mod-badge-group { display: flex; gap: 0.4rem; align-items: center; }
     .mod-badge {
       font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 999px;
       background: rgba(255, 255, 255, 0.05); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .mod-status-tag {
+      font-size: 0.72rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 999px;
+      display: none; align-items: center; gap: 0.25rem;
+    }
+    .module-card.completed .mod-status-tag {
+      display: inline-flex; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35);
     }
     .mod-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.5rem; color: white; }
     .mod-desc { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.5rem; flex: 1; }
@@ -205,12 +254,12 @@
 
     /* TOOLS HUB */
     .tools-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.35rem; margin-bottom: 3.5rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.35rem; margin-bottom: 3.5rem;
     }
     .tool-card {
       background: rgba(12, 10, 34, 0.7); border: 1px solid var(--border-color);
-      border-radius: var(--radius-md); padding: 1.5rem; transition: all 0.25s ease;
-      text-decoration: none; color: inherit; display: flex; flex-direction: column;
+      border-radius: var(--radius-md); padding: 1.5rem; transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none; color: inherit; display: flex; flex-direction: column; cursor: pointer;
     }
     .tool-card:hover {
       transform: translateY(-4px); border-color: var(--primary-light);
@@ -238,11 +287,176 @@
     .carne-name { font-size: 1.5rem; font-family: 'Outfit', sans-serif; font-weight: 800; color: white; }
     .carne-sub { color: #cbd5e1; font-size: 0.9rem; margin-top: 0.25rem; }
 
+    /* MODAL VIEWER SYSTEM */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      display: none; align-items: center; justify-content: center;
+      padding: 1.5rem; background: rgba(3, 2, 18, 0.88);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .modal-overlay.active {
+      display: flex; animation: modalFadeIn 0.22s ease-out forwards;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-dialog {
+      width: min(1080px, 95vw); height: min(880px, 92vh);
+      background: #0b0922; border: 1px solid rgba(129, 140, 248, 0.4);
+      border-radius: 22px; display: flex; flex-direction: column; overflow: hidden;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.65), 0 0 45px rgba(99, 102, 241, 0.2);
+    }
+
+    .modal-header {
+      padding: 1.15rem 1.5rem; background: rgba(18, 14, 46, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    .modal-title-box { display: flex; align-items: center; gap: 0.85rem; }
+    .modal-mod-badge {
+      padding: 0.3rem 0.75rem; border-radius: 10px; font-weight: 800; font-size: 0.82rem;
+      background: linear-gradient(135deg, #6366f1, #a855f7); color: white;
+    }
+    .modal-title { font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 800; color: white; }
+
+    .modal-close-btn {
+      width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255, 255, 255, 0.06); color: white; font-size: 1.15rem;
+      display: grid; place-items: center; cursor: pointer; transition: background 0.2s;
+    }
+    .modal-close-btn:hover { background: rgba(239, 68, 68, 0.3); border-color: rgba(239, 68, 68, 0.6); }
+
+    /* MODAL TABS */
+    .modal-tabs {
+      display: flex; background: rgba(10, 8, 28, 0.9); border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0 1.5rem; gap: 0.5rem;
+    }
+    .modal-tab-btn {
+      padding: 0.75rem 1.2rem; background: none; border: none; border-bottom: 2px solid transparent;
+      color: var(--text-muted); font-size: 0.88rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s, border-color 0.2s;
+    }
+    .modal-tab-btn:hover { color: white; }
+    .modal-tab-btn.active { color: var(--primary-light); border-bottom-color: var(--primary-light); }
+
+    .modal-body {
+      flex: 1; overflow-y: auto; padding: 1.75rem 2rem; position: relative;
+    }
+
+    /* MODULE CONTENT STYLING */
+    .mod-purpose-banner {
+      background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 14px; padding: 1.15rem 1.35rem; margin-bottom: 1.5rem;
+    }
+    .mod-purpose-banner h4 { font-family: 'Outfit', sans-serif; color: var(--primary-light); margin-bottom: 0.35rem; font-size: 1rem; }
+    .mod-purpose-banner p { font-size: 0.92rem; color: #e2e8f0; line-height: 1.5; }
+
+    .mod-callout-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .mod-callout-box {
+      background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px; padding: 1.15rem;
+    }
+    .mod-callout-box h5 { font-family: 'Outfit', sans-serif; font-size: 0.98rem; margin-bottom: 0.35rem; color: white; }
+    .mod-callout-box p { font-size: 0.86rem; color: var(--text-muted); line-height: 1.5; }
+
+    .mod-section-card {
+      background: rgba(20, 16, 52, 0.5); border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 16px; padding: 1.35rem; margin-bottom: 1.5rem;
+    }
+    .mod-section-card h5 { font-family: 'Outfit', sans-serif; font-size: 1.05rem; margin-bottom: 0.75rem; color: white; display: flex; align-items: center; gap: 0.4rem; }
+
+    .mod-steps-list { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+    .mod-step-item { display: flex; gap: 0.75rem; font-size: 0.88rem; color: #cbd5e1; align-items: flex-start; }
+    .mod-step-num {
+      width: 22px; height: 22px; border-radius: 50%; background: var(--primary);
+      color: white; font-weight: 800; font-size: 0.75rem; display: grid; place-items: center; flex-shrink: 0;
+    }
+
+    /* PROMPT BOX CON COPIADO RÁPIDO */
+    .prompt-container {
+      background: rgba(3, 2, 18, 0.85); border: 1px solid rgba(129, 140, 248, 0.35);
+      border-radius: 14px; padding: 1.15rem; margin-bottom: 1.5rem;
+    }
+    .prompt-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
+    .prompt-label { font-size: 0.78rem; text-transform: uppercase; font-weight: 800; color: var(--primary-light); letter-spacing: 0.5px; }
+    .prompt-code {
+      font-family: monospace; font-size: 0.9rem; color: #a5f3fc; background: rgba(0,0,0,0.35);
+      padding: 0.85rem 1rem; border-radius: 10px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* CHECKLIST */
+    .checklist-container { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .check-label {
+      display: flex; align-items: center; gap: 0.65rem; font-size: 0.88rem; color: #cbd5e1;
+      padding: 0.5rem 0.75rem; border-radius: 8px; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: background 0.2s;
+    }
+    .check-label:hover { background: rgba(99, 102, 241, 0.1); }
+    .check-label input { width: 17px; height: 17px; accent-color: var(--primary); cursor: pointer; }
+
+    /* PDF FRAME VIEW */
+    .pdf-viewer-wrap { width: 100%; height: 100%; min-height: 480px; display: flex; flex-direction: column; }
+    .pdf-top-actions {
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      padding: 0.75rem 1rem; background: rgba(12, 10, 34, 0.8); border-radius: 12px; margin-bottom: 0.85rem;
+    }
+    #moduleIframe { width: 100%; flex: 1; min-height: 440px; border: 0; border-radius: 14px; background: white; }
+
+    .modal-footer {
+      padding: 1rem 1.5rem; background: rgba(18, 14, 46, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed; right: 1.5rem; bottom: 1.5rem; z-index: 10000;
+      background: #0f172a; border: 1px solid #818cf8; border-radius: 14px;
+      padding: 0.9rem 1.25rem; color: white; box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+      transform: translateY(100px); opacity: 0; transition: transform 0.25s ease, opacity 0.25s ease;
+      font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* EDIT PROFILE FORM STYLES */
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 700; color: #cbd5e1; margin-bottom: 0.35rem; }
+    .form-control {
+      width: 100%; padding: 0.75rem 1rem; border-radius: 12px;
+      background: rgba(3, 0, 20, 0.75); border: 1px solid rgba(99, 102, 241, 0.25);
+      color: white; font-size: 0.92rem; font-family: inherit; outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary-light); box-shadow: 0 0 14px rgba(99, 102, 241, 0.35); }
+
+    /* SIMULATOR STYLES */
+    .sim-badge {
+      display: inline-block; padding: 0.35rem 0.85rem; border-radius: 999px; font-weight: 800; font-size: 0.82rem;
+      margin-bottom: 0.6rem;
+    }
+    .sim-badge.good { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .sim-badge.bad { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.4); }
+
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .menu-hero { padding: 1.75rem 1.5rem; }
+      .menu-hero { padding: 1.5rem 1.25rem; }
+      .hero-title { font-size: 1.6rem; }
       .modules-grid { grid-template-columns: 1fr; }
       nav ul { display: none; }
       .carne-panel { flex-direction: column; align-items: flex-start; }
+      .modal-dialog { width: 96vw; height: 94vh; border-radius: 16px; }
+      .modal-body { padding: 1.25rem; }
+      .ambient-orb { filter: blur(40px); }
+      .orb-1 { width: 260px; height: 260px; }
+      .orb-2 { width: 220px; height: 220px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
@@ -253,7 +467,7 @@
   <!-- HEADER -->
   <header>
     <div class="nav-container">
-      <a href="index.html" class="logo-box">
+      <a href="panel.html" class="logo-box" title="Menú Principal Volver a Aprender">
         <div class="logo-badge">9°</div>
         <div class="logo-text">
           <h1>Volver a Aprender</h1>
@@ -262,16 +476,16 @@
       </a>
       <nav>
         <ul>
-          <li><a href="index.html">🏠 Web Pública</a></li>
-          <li><a href="index.html#curso-completo">📚 Los 6 Módulos</a></li>
-          <li><a href="index.html#simulador">🧪 Laboratorio</a></li>
-          <li><a href="index.html#semaforo">🚦 Semáforo</a></li>
+          <li><a href="index.html" title="Ir a la portada pública institucional">🏠 Web Pública</a></li>
+          <li><a href="#modulos-section" onclick="scrollToSection('modulos-section'); return false;">📚 Los 6 Módulos</a></li>
+          <li><a href="#" onclick="openToolModal('lab'); return false;">🧪 Laboratorio</a></li>
+          <li><a href="#" onclick="openToolModal('semaforo'); return false;">🚦 Semáforo</a></li>
         </ul>
       </nav>
       <div class="nav-actions">
-        <div style="display:flex; align-items:center; gap:0.5rem; padding:0.35rem 0.85rem; background:rgba(99,102,241,0.15); border:1px solid rgba(129,140,248,0.3); border-radius:999px;">
-          <span>👤</span> <strong id="headerUserName" style="font-size:0.85rem; color:white;">Estudiante</strong>
-        </div>
+        <button class="btn btn-secondary btn-sm" onclick="openToolModal('perfil')" style="display:flex; align-items:center; gap:0.4rem;" title="Ver y actualizar perfil">
+          <span>👤</span> <strong id="headerUserName">Estudiante</strong>
+        </button>
         <button class="btn btn-secondary btn-sm" onclick="logoutStudent()">🚪 Salir</button>
       </div>
     </div>
@@ -280,51 +494,69 @@
   <main>
     <!-- HERO DE BIENVENIDA AL MENÚ PRINCIPAL -->
     <div class="menu-hero">
-      <div class="hero-top-row">
-        <div class="hero-user-info">
-          <div class="hero-avatar">🎓</div>
-          <div>
-            <div class="hero-welcome-badge">✔ Menú Principal Activo · 2026</div>
-            <h2 class="hero-title" id="welcomeTitle">¡Hola de nuevo, Estudiante! 🚀</h2>
-            <p class="hero-subtitle" id="welcomeDetails">Estudiante de Grado 9° en I.E. Concejo de Medellín · Medellín</p>
+      <div class="menu-hero-grid">
+        <div>
+          <div class="hero-top-row">
+            <div class="hero-user-info">
+              <div class="hero-avatar">🎓</div>
+              <div>
+                <div class="hero-welcome-badge">✔ Menú Principal Activo · Grado 9° Colombia</div>
+                <h2 class="hero-title" id="welcomeTitle">¡Hola de nuevo, Estudiante! 🚀</h2>
+                <p class="hero-subtitle" id="welcomeDetails">Estudiante de Grado 9° en I.E. Concejo de Medellín · Medellín</p>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary" id="btnContinueCourse" onclick="continueToNextModule()">
+                ▶ Continuar Curso Oficial ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- BARRA DE PROGRESO GENERAL -->
+          <div class="progress-bar-container">
+            <div class="progress-header">
+              <span>Progreso General en los 6 Módulos Oficiales</span>
+              <span id="progressText" style="color:var(--primary-light); font-weight:800;">0 de 6 módulos completados (0%)</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
           </div>
         </div>
-        <div>
-          <a href="index.html#curso-completo" class="btn btn-primary" id="btnContinueCourse">
-            ▶ Continuar Curso Oficial ➔
-          </a>
-        </div>
-      </div>
 
-      <!-- BARRA DE PROGRESO GENERAL -->
-      <div class="progress-bar-container">
-        <div class="progress-header">
-          <span>Progreso General en los 6 Módulos Oficiales</span>
-          <span id="progressText" style="color:var(--primary-light);">0 de 6 módulos completados (0%)</span>
-        </div>
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
+        <!-- FOTO OFICIAL DEL ESTUDIANTE EN EL PANEL -->
+        <div>
+          <div class="panel-photo-card">
+            <img src="170542ad-4bd1-4525-98cc-46b755a11884.jpg" alt="Estudiante de noveno grado estudiando activamente con computador y libreta de apuntes">
+            <div class="panel-photo-badge">
+              <div class="badge-title"><span>💡</span> El 80% del aprendizaje ocurre en tus apuntes</div>
+              <div class="badge-sub">Usa la IA para desbloquear pasos difíciles, no para saltarte el esfuerzo mental.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- SECCIÓN 1: MENÚ DE MÓDULOS (LAS 6 LECCIONES) -->
-    <div class="section-title-wrap">
+    <div class="section-title-wrap" id="modulos-section">
       <div>
         <h3 class="section-heading">Plan de Aprendizaje Oficial</h3>
         <p class="section-sub">Explora los 6 módulos diseñados para el currículo de 9° y pruebas Saber.</p>
       </div>
-      <a href="index.html#curso-completo" style="color:var(--primary-light); font-size:0.88rem; font-weight:700; text-decoration:none;">
-        Ver programa completo ➔
-      </a>
+      <button onclick="selectModule(1)" class="btn btn-secondary btn-sm" style="color:var(--primary-light);">
+        Comenzar desde el Módulo 1 ➔
+      </button>
     </div>
 
     <div class="modules-grid">
       <!-- MÓDULO 1 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-1" onclick="selectModule(1)">
         <div class="mod-card-top">
           <div class="mod-number">01</div>
-          <span class="mod-badge">Fundamentos</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-1">✔ Completado</span>
+            <span class="mod-badge">Fundamentos</span>
+          </div>
         </div>
         <h4 class="mod-title">Autonomía y Fundamentos con IA</h4>
         <p class="mod-desc">Aprende a usar la inteligencia artificial sin perder tu pensamiento crítico ni delegar la comprensión que te corresponde.</p>
@@ -333,15 +565,18 @@
             <span>⏱️ 45 min</span>
             <span>⭐ Básico</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(1)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
 
       <!-- MÓDULO 2 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-2" onclick="selectModule(2)">
         <div class="mod-card-top">
           <div class="mod-number">02</div>
-          <span class="mod-badge">Método Socrático</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-2">✔ Completado</span>
+            <span class="mod-badge">Método Socrático</span>
+          </div>
         </div>
         <h4 class="mod-title">Preguntar, Pensar y Verificar</h4>
         <p class="mod-desc">El arte del prompting activo: no pidas la respuesta resuelta de golpe, pídele que actúe como tutor y te dé pistas paso a paso.</p>
@@ -350,15 +585,18 @@
             <span>⏱️ 50 min</span>
             <span>🔍 Pensamiento</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(2)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
 
       <!-- MÓDULO 3 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-3" onclick="selectModule(3)">
         <div class="mod-card-top">
           <div class="mod-number">03</div>
-          <span class="mod-badge">Creación</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-3">✔ Completado</span>
+            <span class="mod-badge">Creación</span>
+          </div>
         </div>
         <h4 class="mod-title">Aprender sin Copy-Paste</h4>
         <p class="mod-desc">Estrategias de redacción, paráfrasis y asimilación de conceptos para que tus trabajos reflejen tu propia voz y entendimiento.</p>
@@ -367,15 +605,18 @@
             <span>⏱️ 40 min</span>
             <span>✍️ Originalidad</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(3)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
 
       <!-- MÓDULO 4 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-4" onclick="selectModule(4)">
         <div class="mod-card-top">
           <div class="mod-number">04</div>
-          <span class="mod-badge">Rendimiento</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-4">✔ Completado</span>
+            <span class="mod-badge">Rendimiento</span>
+          </div>
         </div>
         <h4 class="mod-title">Plan de Estudio para Mejores Notas</h4>
         <p class="mod-desc">Crea simulacros cronometrados tipo Saber 9° y entrena tus debilidades en matemáticas, lenguaje y ciencias con retroalimentación.</p>
@@ -384,15 +625,18 @@
             <span>⏱️ 55 min</span>
             <span>📊 Saber 9°</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(4)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
 
       <!-- MÓDULO 5 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-5" onclick="selectModule(5)">
         <div class="mod-card-top">
           <div class="mod-number">05</div>
-          <span class="mod-badge">Ética Digital</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-5">✔ Completado</span>
+            <span class="mod-badge">Ética Digital</span>
+          </div>
         </div>
         <h4 class="mod-title">Privacidad, Ética y Decisiones</h4>
         <p class="mod-desc">Seguridad de datos en el entorno escolar: qué datos jamás compartir y cómo evitar trampas que anulen tu aprendizaje real.</p>
@@ -401,15 +645,18 @@
             <span>⏱️ 35 min</span>
             <span>🛡️ Ciberseguridad</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(5)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
 
       <!-- MÓDULO 6 -->
-      <div class="module-card">
+      <div class="module-card" id="card-mod-6" onclick="selectModule(6)">
         <div class="mod-card-top">
           <div class="mod-number">06</div>
-          <span class="mod-badge">Certificación</span>
+          <div class="mod-badge-group">
+            <span class="mod-status-tag" id="status-tag-6">✔ Completado</span>
+            <span class="mod-badge">Certificación</span>
+          </div>
         </div>
         <h4 class="mod-title">Proyecto Final y Ruta de Autonomía</h4>
         <p class="mod-desc">Desarrolla un proyecto escolar integrador de 7 días, susténtalo con tus propias palabras y obtén tu certificación de 9°.</p>
@@ -418,7 +665,7 @@
             <span>⏱️ 60 min</span>
             <span>🏆 Proyecto</span>
           </div>
-          <a href="index.html#curso-completo" onclick="selectModule(6)" class="btn btn-primary btn-sm">Estudiar ➔</a>
+          <span class="btn btn-primary btn-sm">Estudiar ➔</span>
         </div>
       </div>
     </div>
@@ -427,42 +674,42 @@
     <div class="section-title-wrap">
       <div>
         <h3 class="section-heading">Herramientas y Acciones Rápidas</h3>
-        <p class="section-sub">Entrena, evalúa y organiza tu método de estudio.</p>
+        <p class="section-sub">Entrena, evalúa y organiza tu método de estudio dentro de la aplicación.</p>
       </div>
     </div>
 
     <div class="tools-grid">
       <!-- SIMULADOR DE PROMPTS -->
-      <a href="index.html#simulador" class="tool-card">
+      <div class="tool-card" onclick="openToolModal('lab')">
         <div class="tool-icon">🧪</div>
         <h4 class="tool-title">Laboratorio de Prompts</h4>
         <p class="tool-desc">Escribe tus consultas y descubre si tu prompt está en "Modo Pereza" o en "Modo Aprendizaje Activo".</p>
         <div class="tool-action">Probar simulador ➔</div>
-      </a>
+      </div>
 
       <!-- SEMÁFORO ÉTICO -->
-      <a href="index.html#semaforo" class="tool-card">
+      <div class="tool-card" onclick="openToolModal('semaforo')">
         <div class="tool-icon">🚦</div>
         <h4 class="tool-title">Semáforo de la IA</h4>
         <p class="tool-desc">Aprende al instante qué actividades tienen vía libre (verde), cuáles precaución (amarillo) y cuáles prohibición (rojo).</p>
         <div class="tool-action">Ver semáforo ➔</div>
-      </a>
+      </div>
 
-      <!-- ESTUDIO ACTIVO -->
-      <a href="index.html#colaborativo" class="tool-card">
+      <!-- ESTUDIO COLABORATIVO -->
+      <div class="tool-card" onclick="openToolModal('colab')">
         <div class="tool-icon">👥</div>
         <h4 class="tool-title">Estudio Colaborativo</h4>
         <p class="tool-desc">Aprende técnicas para debatir con tus compañeros en clase y sustentar ideas frente a los profesores sin pantallas.</p>
         <div class="tool-action">Explorar método ➔</div>
-      </a>
+      </div>
 
       <!-- REGISTRO Y EDICIÓN -->
-      <a href="index.html#registro" class="tool-card">
+      <div class="tool-card" onclick="openToolModal('perfil')">
         <div class="tool-icon">✏️</div>
         <h4 class="tool-title">Actualizar Mi Perfil</h4>
         <p class="tool-desc">Edita tu materia de refuerzo, colegio, ciudad o datos de contacto cuando lo necesites.</p>
         <div class="tool-action">Editar datos ➔</div>
-      </a>
+      </div>
     </div>
 
     <!-- CARNÉ VIRTUAL OFICIAL -->
@@ -470,7 +717,7 @@
       <div class="carne-left">
         <div class="carne-badge-icon">🎖️</div>
         <div>
-          <div style="font-size:0.75rem; color:var(--primary-light); text-transform:uppercase; font-weight:800; letter-spacing:1px; margin-bottom:0.25rem;">Carné Digital Acreditado</div>
+          <div style="font-size:0.75rem; color:var(--primary-light); text-transform:uppercase; font-weight:800; letter-spacing:1px; margin-bottom:0.25rem;">Carné Digital Acreditado · 2026</div>
           <div class="carne-name" id="carneName">Estudiante Estratega</div>
           <div class="carne-sub" id="carneDetails">I.E. Concejo de Medellín · Grado 9° Colombia</div>
         </div>
@@ -479,15 +726,276 @@
         <a id="btnTutorWhatsApp" href="#" target="_blank" class="btn btn-primary" style="display:none;">
           💬 Consultar Tutor por WhatsApp
         </a>
-        <a href="index.html#curso-completo" class="btn btn-secondary">
-          📚 Ir al Curso Completo
-        </a>
+        <button onclick="scrollToSection('modulos-section')" class="btn btn-secondary">
+          📚 Ir a los Módulos
+        </button>
       </div>
     </div>
-
   </main>
 
+  <!-- MODAL VISUALIZADOR DE MÓDULO INTERACTIVO Y PDF -->
+  <div id="moduleModal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-mod-badge" id="modalModBadge">Módulo 1</span>
+          <h3 class="modal-title" id="modalModTitle">Título del Módulo</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModuleModal()" title="Cerrar módulo">✕</button>
+      </div>
+
+      <div class="modal-tabs">
+        <button class="modal-tab-btn active" id="tabInteractiveBtn" onclick="switchModuleTab('interactive')">
+          📖 Guía y Práctica Interactiva
+        </button>
+        <button class="modal-tab-btn" id="tabPdfBtn" onclick="switchModuleTab('pdf')">
+          📄 Guía Oficial en PDF
+        </button>
+      </div>
+
+      <div class="modal-body" id="modalBodyInteractive">
+        <!-- Banner de Propósito -->
+        <div class="mod-purpose-banner">
+          <h4>🎯 Propósito Formativo (Grado 9°)</h4>
+          <p id="modPurposeText">Propósito del módulo...</p>
+        </div>
+
+        <!-- Puntos Clave Callouts -->
+        <div class="mod-callout-grid" id="modCalloutGrid"></div>
+
+        <!-- Práctica Guiada -->
+        <div class="mod-section-card">
+          <h5>🛠️ Práctica Guiada Paso a Paso</h5>
+          <ol class="mod-steps-list" id="modStepsList"></ol>
+        </div>
+
+        <!-- Prompt Oficial con Copiado -->
+        <div class="prompt-container">
+          <div class="prompt-top">
+            <span class="prompt-label">Prompt Oficial para Copiar y Usar</span>
+            <button class="btn btn-secondary btn-sm" id="btnCopyPrompt" onclick="copyActivePrompt()">
+              📋 Copiar Prompt
+            </button>
+          </div>
+          <div class="prompt-code" id="modPromptCode">Prompt de ejemplo...</div>
+        </div>
+
+        <!-- Checklist de Aprendizaje -->
+        <div class="mod-section-card">
+          <h5>✅ Comprobación de Aprendizaje</h5>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:0.75rem;">Marca los logros alcanzados en este módulo:</p>
+          <div class="checklist-container" id="modChecklist"></div>
+        </div>
+      </div>
+
+      <div class="modal-body" id="modalBodyPdf" style="display:none; padding:1.25rem;">
+        <div class="pdf-viewer-wrap">
+          <div class="pdf-top-actions">
+            <span style="font-size:0.88rem; color:#cbd5e1;">Visualizando documento oficial en PDF:</span>
+            <a id="btnDirectDownloadPdf" href="#" target="_blank" class="btn btn-primary btn-sm">
+              📥 Abrir / Descargar PDF Oficial
+            </a>
+          </div>
+          <iframe id="moduleIframe" src="" title="Guía en PDF del módulo"></iframe>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div style="display:flex; gap:0.5rem;">
+          <button class="btn btn-secondary btn-sm" id="btnPrevModule" onclick="navigateModule(-1)">⬅ Anterior</button>
+          <button class="btn btn-secondary btn-sm" id="btnNextModule" onclick="navigateModule(1)">Siguiente ➔</button>
+        </div>
+        <div style="display:flex; gap:0.75rem; align-items:center;">
+          <button class="btn btn-primary btn-sm" id="btnMarkComplete" onclick="toggleCurrentModuleCompletion()">
+            ✅ Marcar como Completado
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="closeModuleModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HERRAMIENTAS (LABORATORIO, SEMÁFORO, COLABORATIVO, PERFIL) -->
+  <div id="toolModal" class="modal-overlay">
+    <div class="modal-dialog" style="max-height:820px;">
+      <div class="modal-header">
+        <div class="modal-title-box">
+          <span class="modal-mod-badge" id="toolBadge">Herramienta</span>
+          <h3 class="modal-title" id="toolTitle">Título Herramienta</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeToolModal()" title="Cerrar">✕</button>
+      </div>
+      <div class="modal-body" id="toolBody">
+        <!-- CONTENIDO DINÁMICO SEGÚN LA HERRAMIENTA -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICACIONES -->
+  <div class="toast" id="toast"></div>
+
   <script>
+    // -------------------------------------------------------------
+    // DATA OFICIAL DE LOS 6 MÓDULOS DE 9°
+    // -------------------------------------------------------------
+    const MODULES_DATA = {
+      1: {
+        num: 1,
+        title: "Autonomía y Fundamentos con IA",
+        badge: "Módulo 1 · Fundamentos",
+        pdf: "output/pdf/modulo_1_empezar_con_ia_sin_perder_autonomia.pdf",
+        purpose: "Aprender a distinguir entre usar una herramienta para potenciar una tarea y dejar que la herramienta piense o resuelva la comprensión que te corresponde a ti.",
+        callouts: [
+          { title: "🛡️ La responsabilidad no se delega", desc: "La IA puede explicar, ordenar ideas o proponer ejercicios. Tú respondes por lo que entregas y defiendes en el salón." },
+          { title: "❓ La frase que cambia todo", desc: "Antes de consultar, formula: 'Al final de esta sesión quiero ser capaz de explicar...' Así evitas perderte en respuestas pasivas." }
+        ],
+        steps: [
+          "Escribe en tu libreta el objetivo concreto que debes aprender antes de abrir la IA.",
+          "Haz un primer intento de resolución con tus propios apuntes escolares.",
+          "Pide a la IA una explicación conceptual o una pista sobre tu error, sin pedir la solución final.",
+          "Verifica el resultado contrastando con el libro de texto del colegio.",
+          "Explica en tus propias palabras qué aprendiste de diferente."
+        ],
+        prompt: "Estoy estudiando [tema]. Ya intenté [lo que hice]. No me des la respuesta final. Hazme una sola pregunta a la vez para guiarme al siguiente paso y dime por qué mi razonamiento funciona o no.",
+        checks: [
+          "Definí mi objetivo antes de interactuar con la herramienta.",
+          "Intenté primero resolver la actividad con mis propios conocimientos.",
+          "Pedí pistas reflexivas en lugar de copiar la respuesta de golpe.",
+          "Puedo explicar el procedimiento frente a mi docente sin mirar la pantalla."
+        ]
+      },
+      2: {
+        num: 2,
+        title: "Preguntar, Pensar y Verificar",
+        badge: "Módulo 2 · Método Socrático",
+        pdf: "output/pdf/modulo_2_preguntar_pensar_y_verificar.pdf",
+        purpose: "Convertir preguntas vagas en instrucciones con contexto pedagógico y desarrollar el hábito crítico de verificar datos históricos, fórmulas y afirmaciones.",
+        callouts: [
+          { title: "📐 Un buen prompt tiene contexto", desc: "Incluye tu grado (9°), lo que ya sabes, el formato deseado (analogía, tabla) y un límite claro ('no lo resuelvas tú')." },
+          { title: "⚠️ Elocuencia no es certeza", desc: "La IA puede generar textos fluidos con datos inexactos o inventados. Tu libro y tus profesores son la referencia oficial." }
+        ],
+        steps: [
+          "Formula una pregunta inicial clara definiendo que eres estudiante de noveno grado.",
+          "Solicita una analogía cotidiana colombiana para asimilar el concepto abstracto.",
+          "Exige que la IA te haga preguntas de autoevaluación al final.",
+          "Contrasta fechas, fórmulas y nombres propios con fuentes oficiales.",
+          "Registra en tu libreta las conclusiones verificadas."
+        ],
+        prompt: "Actúa como un profesor exigente de grado noveno. Explícame el concepto de [concepto] usando una analogía cotidiana y luego plantéame dos preguntas para evaluar si realmente lo entendí.",
+        checks: [
+          "Di instrucciones claras con nivel de dificultad y formato.",
+          "Pedí que separen hechos comprobables de opiniones.",
+          "Comprobé las fechas y fórmulas clave en mis libros escolares.",
+          "Usé la IA como entrenador socrático y no como generador ciego."
+        ]
+      },
+      3: {
+        num: 3,
+        title: "Aprender sin Copy-Paste",
+        badge: "Módulo 3 · Originalidad y Síntesis",
+        pdf: "output/pdf/modulo_3_aprender_sin_copy_paste.pdf",
+        purpose: "Desarrollar habilidades sólidas de paráfrasis, redacción propia y estructuración de ensayos para que cada trabajo refleje tu propia voz y madurez intelectual.",
+        callouts: [
+          { title: "✍️ La IA como revisora, no redactora", desc: "Pídele que señale debilidades en tus argumentos o errores de coherencia, no que redacte el ensayo por ti." },
+          { title: "🗣️ La prueba de la sustentación", desc: "Si un profesor te pregunta qué significa un término rebuscado de tu texto y no sabes responder, tu nota se verá afectada." }
+        ],
+        steps: [
+          "Escribe tu tesis y tres argumentos principales con tu propio estilo.",
+          "Pega tus párrafos en la IA y pide que evalúe si la relación causa-efecto es clara.",
+          "Pide contraargumentos posibles para fortalecer tu postura.",
+          "Reescribe con tu vocabulario natural asegurándote de comprender cada frase.",
+          "Practica una sustentación de 1 minuto en voz alta."
+        ],
+        prompt: "Revisa este párrafo que redacté para grado 9° sobre [tema]: \"[pega tu texto aquí]\". Señala problemas de coherencia o saltos lógicos, pero no lo reescribas. Hazme dos preguntas para profundizar.",
+        checks: [
+          "Escribí el borrador inicial con mis propias palabras e ideas.",
+          "Utilicé la IA para criticar y retroalimentar mi argumentación.",
+          "Evité pegar vocabulario artificial que no sé sustentar.",
+          "Comprendo la totalidad de mi entrega escolar."
+        ]
+      },
+      4: {
+        num: 4,
+        title: "Plan de Estudio para Mejores Notas",
+        badge: "Módulo 4 · Saber 9° y Rendimiento",
+        pdf: "output/pdf/modulo_4_plan_de_estudio_para_mejores_notas.pdf",
+        purpose: "Construir simulacros cronometrados tipo pruebas Saber 9° en matemáticas, lenguaje y ciencias, identificando debilidades con explicaciones paso a paso.",
+        callouts: [
+          { title: "📊 Competencias sobre memoria", desc: "Saber 9° evalúa interpretar gráficas, inferir posturas y modelar problemas. Entrena el razonamiento, no solo memorizar." },
+          { title: "⏱️ Práctica deliberada con tiempo", desc: "Entrena con 2 a 3 minutos por pregunta para dominar la gestión de la ansiedad en los exámenes oficiales." }
+        ],
+        steps: [
+          "Selecciona tu materia prioritaria (ej. Álgebra, Lectura Crítica o Ciencias).",
+          "Solicita 3 preguntas de selección múltiple con contexto de grado 9°.",
+          "Resuelve sin consultar apuntes y cronometra tu tiempo.",
+          "Pide que te explique detalladamente por qué cada una de las otras opciones era distractora.",
+          "Anota en tu ficha de errores qué concepto requieres repasar."
+        ],
+        prompt: "Genera una pregunta de selección múltiple tipo Saber 9° sobre [tema de tu materia] con 4 opciones. No me des la respuesta aún. Espera mi opción y luego explícame por qué acerté o fallé.",
+        checks: [
+          "Entrené con preguntas estilo selección múltiple con justificación.",
+          "Revisé por qué los distractores eran incorrectos.",
+          "Identifiqué el tema específico donde necesito refuerzo.",
+          "Repasé con ejercicios prácticos antes de la prueba presencial."
+        ]
+      },
+      5: {
+        num: 5,
+        title: "Privacidad, Ética y Decisiones",
+        badge: "Módulo 5 · Ciudadanía Digital",
+        pdf: "output/pdf/modulo_5_privacidad_etica_y_decisiones.pdf",
+        purpose: "Comprender la protección de datos personales escolares (Ley 1581 en Colombia), qué información jamás subir a la nube y cómo mantener la honestidad académica.",
+        callouts: [
+          { title: "🔒 Tus datos y los de tu colegio son sagrados", desc: "Nunca subas nombres de docentes, fotos de compañeros, direcciones ni datos institucionales privados." },
+          { title: "⚖️ La honestidad construye tu futuro", desc: "El plagio digital no engaña a los evaluadores y deteriora las competencias básicas necesarias para 10°, 11° y la universidad." }
+        ],
+        steps: [
+          "Revisa tus consultas anteriores y elimina cualquier dato sensible o privado.",
+          "Aprende a anonimizar enunciados de tareas antes de introducirlos en plataformas de IA.",
+          "Establece una regla personal de transparencia: cita tus apoyos metodológicos cuando corresponda.",
+          "Consulta el manual de convivencia de tu institución respecto al uso de tecnología.",
+          "Comparte estas buenas prácticas con tu grupo de trabajo escolar."
+        ],
+        prompt: "Explícame de forma didáctica cuáles son los riesgos de privacidad al subir datos escolares a plataformas de IA públicas y qué buenas prácticas de anonimización debo aplicar en 9°.",
+        checks: [
+          "Jamás comparto información personal mía ni de mis compañeros.",
+          "Anonimizo los enunciados escolares antes de cualquier consulta.",
+          "Respeto el manual de convivencia y las normas de mi institución.",
+          "Promuevo el uso ético y responsable de la tecnología en mi aula."
+        ]
+      },
+      6: {
+        num: 6,
+        title: "Proyecto Final y Ruta de Autonomía",
+        badge: "Módulo 6 · Certificación Oficial",
+        pdf: "output/pdf/modulo_6_proyecto_final_y_ruta_de_aprendizaje.pdf",
+        purpose: "Desarrollar un proyecto escolar integrador de 7 días, sustentar tus conclusiones oralmente sin pantallas y consolidar tu certificación como Estudiante Estratega.",
+        callouts: [
+          { title: "🏆 La sustentación presencial", desc: "El verdadero dominio se demuestra explicando tus ideas con pizarra y voz frente a tu comunidad educativa." },
+          { title: "🗺️ Una ruta sostenible hacia 10° y 11°", desc: "Conserva hábitos de estudio activo: tu pensamiento crítico es la ventaja más valiosa en la era digital." }
+        ],
+        steps: [
+          "Elige un problema de tu entorno escolar o barrial para investigar durante 7 días.",
+          "Usa la IA únicamente en la fase de lluvia de ideas y búsqueda de preguntas desafiantes.",
+          "Desarrolla el trabajo de campo y la redacción final por cuenta propia.",
+          "Prepara un esquema visual para exponerlo en 5 minutos sin leer diapositivas.",
+          "Presenta tu proyecto y solicita la validación de tu docente."
+        ],
+        prompt: "Ayúdame a estructurar un cronograma de 7 días para un proyecto de grado 9° sobre [tema]. Incluye hitos de investigación, borrador personal, revisión crítica y preparación de sustentación oral.",
+        checks: [
+          "Estructuré un proyecto escolar de 7 días con autonomía demostrada.",
+          "Utilicé la IA como copiloto metodológico y no como sustituto reflexivo.",
+          "Puedo sustentar oralmente cada parte de mi proyecto.",
+          "Completé la formación oficial de Volver a Aprender para noveno grado."
+        ]
+      }
+    };
+
+    // -------------------------------------------------------------
+    // ESTADO DE LA APLICACIÓN
+    // -------------------------------------------------------------
+    let currentActiveModule = 1;
+
     function readStoredJSON(key, fallback) {
       try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
       catch (e) { return fallback; }
@@ -496,8 +1004,8 @@
     function initMenuPrincipal() {
       const profile = readStoredJSON('studentProfile', null);
       if (!profile || !profile.name) {
-        // Redirigir si no hay registro
-        window.location.href = 'index.html#registro';
+        // Redirigir ordenadamente a registro si no existe sesión
+        window.location.href = 'registro.html';
         return;
       }
 
@@ -506,8 +1014,9 @@
       document.getElementById('welcomeTitle').textContent = `¡Hola de nuevo, ${nickname}! 🚀`;
       document.getElementById('welcomeDetails').textContent = `Estudiante de Grado 9° en ${profile.school || 'I.E. Concejo de Medellín'} · ${profile.city || 'Medellín'}`;
       
-      document.getElementById('carneName').textContent = `${profile.name} (Carné #9-${profile.city ? profile.city.slice(0,3).toUpperCase() : 'COL'})`;
-      document.getElementById('carneDetails').textContent = `${profile.school} • Materia clave: ${profile.subject || 'Matemáticas y Álgebra'}`;
+      const cityCode = profile.city ? profile.city.slice(0,3).toUpperCase() : 'COL';
+      document.getElementById('carneName').textContent = `${profile.name} (Carné #9-${cityCode})`;
+      document.getElementById('carneDetails').textContent = `${profile.school || 'I.E. Concejo de Medellín'} • Materia clave: ${profile.subject || 'Matemáticas y Álgebra'}`;
 
       if (profile.whatsapp || profile.subject) {
         const btnWa = document.getElementById('btnTutorWhatsApp');
@@ -516,26 +1025,465 @@
         btnWa.style.display = 'inline-flex';
       }
 
-      // Progreso
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
       const completed = readStoredJSON('completedModules', []);
       const count = Math.min(completed.length, 6);
       const pct = Math.round((count / 6) * 100);
+      
       document.getElementById('progressFill').style.width = pct + '%';
       document.getElementById('progressText').textContent = `${count} de 6 módulos completados (${pct}%)`;
+
+      // Actualizar tarjetas de los módulos
+      for (let i = 1; i <= 6; i++) {
+        const card = document.getElementById(`card-mod-${i}`);
+        if (card) {
+          if (completed.includes(i)) {
+            card.classList.add('completed');
+          } else {
+            card.classList.remove('completed');
+          }
+        }
+      }
     }
 
+    // -------------------------------------------------------------
+    // GESTIÓN DEL MODAL DE MÓDULOS
+    // -------------------------------------------------------------
     function selectModule(num) {
+      if (num < 1 || num > 6) num = 1;
+      currentActiveModule = num;
       localStorage.setItem('selectedModule', num);
+
+      const mod = MODULES_DATA[num];
+      if (!mod) return;
+
+      document.getElementById('modalModBadge').textContent = `Módulo ${num}`;
+      document.getElementById('modalModTitle').textContent = mod.title;
+      document.getElementById('modPurposeText').textContent = mod.purpose;
+      document.getElementById('modPromptCode').textContent = mod.prompt;
+
+      // Callouts
+      const calloutGrid = document.getElementById('modCalloutGrid');
+      calloutGrid.innerHTML = mod.callouts.map(c => `
+        <div class="mod-callout-box">
+          <h5>${escapeHTML(c.title)}</h5>
+          <p>${escapeHTML(c.desc)}</p>
+        </div>
+      `).join('');
+
+      // Pasos prácticos
+      const stepsList = document.getElementById('modStepsList');
+      stepsList.innerHTML = mod.steps.map((step, idx) => `
+        <li class="mod-step-item">
+          <span class="mod-step-num">${idx + 1}</span>
+          <span>${escapeHTML(step)}</span>
+        </li>
+      `).join('');
+
+      // Checklist interactiva con guardado local
+      const checklistContainer = document.getElementById('modChecklist');
+      const savedChecks = readStoredJSON(`mod_${num}_checks`, {});
+      checklistContainer.innerHTML = mod.checks.map((chk, idx) => `
+        <label class="check-label">
+          <input type="checkbox" ${savedChecks[idx] ? 'checked' : ''} onchange="saveCheckItem(${num}, ${idx}, this.checked)">
+          <span>${escapeHTML(chk)}</span>
+        </label>
+      `).join('');
+
+      // Configurar PDF e iframe
+      document.getElementById('moduleIframe').src = mod.pdf;
+      document.getElementById('btnDirectDownloadPdf').href = mod.pdf;
+
+      // Botón completar estado
+      const completed = readStoredJSON('completedModules', []);
+      const btnComplete = document.getElementById('btnMarkComplete');
+      if (completed.includes(num)) {
+        btnComplete.textContent = '✔ Módulo Completado';
+        btnComplete.className = 'btn btn-secondary btn-sm';
+      } else {
+        btnComplete.textContent = '✅ Marcar como Completado';
+        btnComplete.className = 'btn btn-primary btn-sm';
+      }
+
+      // Botones navegación
+      document.getElementById('btnPrevModule').disabled = (num <= 1);
+      document.getElementById('btnNextModule').disabled = (num >= 6);
+
+      // Abrir modal y default a tab interactiva
+      switchModuleTab('interactive');
+      document.getElementById('moduleModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
 
+    function switchModuleTab(tab) {
+      const interactiveTab = document.getElementById('tabInteractiveBtn');
+      const pdfTab = document.getElementById('tabPdfBtn');
+      const bodyInteractive = document.getElementById('modalBodyInteractive');
+      const bodyPdf = document.getElementById('modalBodyPdf');
+
+      if (tab === 'pdf') {
+        interactiveTab.classList.remove('active');
+        pdfTab.classList.add('active');
+        bodyInteractive.style.display = 'none';
+        bodyPdf.style.display = 'flex';
+      } else {
+        pdfTab.classList.remove('active');
+        interactiveTab.classList.add('active');
+        bodyPdf.style.display = 'none';
+        bodyInteractive.style.display = 'block';
+      }
+    }
+
+    function closeModuleModal() {
+      document.getElementById('moduleModal').classList.remove('active');
+      document.getElementById('moduleIframe').src = '';
+      document.body.style.overflow = '';
+    }
+
+    function navigateModule(direction) {
+      const nextNum = currentActiveModule + direction;
+      if (nextNum >= 1 && nextNum <= 6) {
+        selectModule(nextNum);
+      }
+    }
+
+    function continueToNextModule() {
+      const completed = readStoredJSON('completedModules', []);
+      for (let i = 1; i <= 6; i++) {
+        if (!completed.includes(i)) {
+          selectModule(i);
+          return;
+        }
+      }
+      selectModule(1);
+    }
+
+    function toggleCurrentModuleCompletion() {
+      let completed = readStoredJSON('completedModules', []);
+      const num = currentActiveModule;
+
+      if (completed.includes(num)) {
+        completed = completed.filter(m => m !== num);
+        showToast(`Módulo ${num} marcado como pendiente.`);
+      } else {
+        completed.push(num);
+        showToast(`🎉 ¡Felicitaciones! Has completado el Módulo ${num}.`);
+      }
+
+      localStorage.setItem('completedModules', JSON.stringify(completed));
+      updateProgressUI();
+
+      const btnComplete = document.getElementById('btnMarkComplete');
+      if (completed.includes(num)) {
+        btnComplete.textContent = '✔ Módulo Completado';
+        btnComplete.className = 'btn btn-secondary btn-sm';
+      } else {
+        btnComplete.textContent = '✅ Marcar como Completado';
+        btnComplete.className = 'btn btn-primary btn-sm';
+      }
+    }
+
+    function saveCheckItem(modNum, checkIdx, isChecked) {
+      const key = `mod_${modNum}_checks`;
+      const current = readStoredJSON(key, {});
+      current[checkIdx] = isChecked;
+      localStorage.setItem(key, JSON.stringify(current));
+    }
+
+    function copyActivePrompt() {
+      const mod = MODULES_DATA[currentActiveModule];
+      if (!mod) return;
+      
+      const copyBtn = document.getElementById('btnCopyPrompt');
+      navigator.clipboard.writeText(mod.prompt).then(() => {
+        copyBtn.textContent = '✔ ¡Copiado!';
+        showToast('📋 Prompt oficial copiado al portapapeles. Pégalo en tu IA.');
+        setTimeout(() => { copyBtn.textContent = '📋 Copiar Prompt'; }, 2200);
+      }).catch(() => {
+        showToast('Selecciona y copia el texto del recuadro manualmente.');
+      });
+    }
+
+    // -------------------------------------------------------------
+    // MODAL DE HERRAMIENTAS Y SIMULADOR INTERACTIVO
+    // -------------------------------------------------------------
+    function openToolModal(toolType) {
+      const modal = document.getElementById('toolModal');
+      const badge = document.getElementById('toolBadge');
+      const title = document.getElementById('toolTitle');
+      const body = document.getElementById('toolBody');
+
+      if (toolType === 'lab') {
+        badge.textContent = 'Simulador';
+        title.textContent = '🧪 Laboratorio de Prompts: Pereza vs. Aprendizaje Activo';
+        body.innerHTML = renderPromptLabHTML();
+      } else if (toolType === 'semaforo') {
+        badge.textContent = 'Normativa';
+        title.textContent = '🚦 Semáforo Ético de la IA en Grado 9°';
+        body.innerHTML = renderSemaforoHTML();
+      } else if (toolType === 'colab') {
+        badge.textContent = 'Metodología';
+        title.textContent = '👥 Estudio Activo y Sustentación sin Pantallas';
+        body.innerHTML = renderColabHTML();
+      } else if (toolType === 'perfil') {
+        badge.textContent = 'Mi Cuenta';
+        title.textContent = '✏️ Actualizar Mi Perfil de Estudiante';
+        body.innerHTML = renderEditProfileHTML();
+      }
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeToolModal() {
+      document.getElementById('toolModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function renderPromptLabHTML() {
+      return `
+        <div style="margin-bottom:1.25rem;">
+          <p style="font-size:0.92rem; color:var(--text-muted); margin-bottom:1rem;">
+            Prueba cómo interactúas con la IA. Selecciona un caso de estudio de 9° o escribe tu consulta para verificar si estás en <strong>Modo Pereza</strong> o en <strong>Modo Estratega</strong>.
+          </p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+            <button class="btn btn-secondary btn-sm" onclick="setLabCase(1)">📐 Álgebra</button>
+            <button class="btn btn-secondary btn-sm" onclick="setLabCase(2)">📖 Ensayo Español</button>
+            <button class="btn btn-secondary btn-sm" onclick="setLabCase(3)">🧪 Química</button>
+            <button class="btn btn-secondary btn-sm" onclick="setLabCase(4)">🏛️ Historia Colombia</button>
+          </div>
+          <div class="form-group">
+            <label>Tu prompt de prueba:</label>
+            <textarea id="labInput" class="form-control" style="height:90px;" oninput="evaluateLabPrompt()"></textarea>
+          </div>
+          <div style="margin-top:1rem; padding:1.25rem; border-radius:14px; background:rgba(3,2,18,0.85); border:1px solid rgba(255,255,255,0.08);">
+            <div id="labEvalBadge" class="sim-badge bad">⚠️ Modo Copy-Paste Detectado</div>
+            <div id="labEvalFeedback" style="font-size:0.9rem; color:#cbd5e1; line-height:1.5; margin-bottom:0.75rem;">
+              Estás pidiendo que la máquina resuelva tu tarea sin proceso cognitivo.
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="autoFixLabPrompt()">✨ Convertir en Prompt Socrático</button>
+          </div>
+        </div>
+      `;
+    }
+
+    const LAB_CASES = {
+      1: {
+        bad: "Resuélveme esta ecuación 3x^2 + 5x - 2 = 0 y dame todo el procedimiento para copiarlo rápido.",
+        good: "Estoy resolviendo 3x^2 + 5x - 2 = 0 en álgebra de 9°. No me des la respuesta final. Dame una sola pista para saber si factorizo por aspa o uso la fórmula cuadrática.",
+        warn: "Pedir la solución resuelta evita que construyas memoria procedimental para el examen presencial en el aula."
+      },
+      2: {
+        bad: "Escribe un ensayo de 500 palabras sobre la violencia en Colombia para entregárselo a mi profesor.",
+        good: "Voy a redactar un ensayo para noveno grado sobre la memoria histórica en Colombia. Mi hipótesis es que la educación rural es clave para la paz. Dame 3 argumentos que puedan retar mi postura.",
+        warn: "El lenguaje robótico y poco natural alertará inmediatamente a tu profesor y no desarrollarás criterio de redacción."
+      },
+      3: {
+        bad: "Dame todas las respuestas del cuestionario de la tabla periódica de noveno.",
+        good: "Explícame qué es la electronegatividad con una analogía simple de la vida cotidiana en Colombia y hazme 2 preguntas para verificar si comprendí.",
+        warn: "Memorizar letras sin entender enlaces químicos te dejará sin bases para décimo y once."
+      },
+      4: {
+        bad: "Hazme un resumen corto del Frente Nacional para copiarlo en mi cuaderno de sociales.",
+        good: "Explícame de manera equilibrada qué acuerdos pactaron los partidos liberal y conservador en el Frente Nacional y qué consecuencias trajo para otros sectores políticos.",
+        warn: "Un resumen copiado no te prepara para las preguntas de análisis de perspectivas ciudadanas del Icfes Saber 9°."
+      }
+    };
+    let currentLabCase = 1;
+
+    function setLabCase(id) {
+      currentLabCase = id;
+      const input = document.getElementById('labInput');
+      if (input) {
+        input.value = LAB_CASES[id].bad;
+        evaluateLabPrompt();
+      }
+    }
+
+    function evaluateLabPrompt() {
+      const input = document.getElementById('labInput').value.toLowerCase();
+      const badge = document.getElementById('labEvalBadge');
+      const feedback = document.getElementById('labEvalFeedback');
+
+      const isCheating = input.includes('resuélveme') || input.includes('resuelve') || input.includes('escribe un ensayo') || input.includes('todas las respuestas') || input.includes('copiarlo rápido');
+
+      if (isCheating && !input.includes('no me des') && !input.includes('pista')) {
+        badge.className = 'sim-badge bad';
+        badge.textContent = '⚠️ Modo Copy-Paste Detectado';
+        feedback.textContent = LAB_CASES[currentLabCase].warn;
+      } else {
+        badge.className = 'sim-badge good';
+        badge.textContent = '🌟 Modo Aprendizaje Activo Socrático';
+        feedback.textContent = '¡Excelente! Pones a la IA en rol de tutor. Tú lideras el razonamiento y fortaleces tu autonomía.';
+      }
+    }
+
+    function autoFixLabPrompt() {
+      document.getElementById('labInput').value = LAB_CASES[currentLabCase].good;
+      evaluateLabPrompt();
+    }
+
+    function renderSemaforoHTML() {
+      return `
+        <div style="display:flex; flex-direction:column; gap:1.25rem;">
+          <div style="padding:1.25rem; border-radius:14px; background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.35);">
+            <h4 style="color:#34d399; font-family:'Outfit', sans-serif; margin-bottom:0.4rem;">🟢 Luz Verde: Uso Recomendado y Potenciador</h4>
+            <ul style="padding-left:1.25rem; font-size:0.88rem; color:#cbd5e1; line-height:1.6;">
+              <li>Lluvia de ideas iniciales y preguntas para enfocar un proyecto escolar.</li>
+              <li>Analogías explicativas para asimilar conceptos abstractos difíciles de ciencias y matemáticas.</li>
+              <li>Simulación de preguntas de examen para autoevaluar tu nivel antes de la prueba oficial.</li>
+            </ul>
+          </div>
+          <div style="padding:1.25rem; border-radius:14px; background:rgba(245, 158, 11, 0.1); border:1px solid rgba(245, 158, 11, 0.35);">
+            <h4 style="color:#fbbf24; font-family:'Outfit', sans-serif; margin-bottom:0.4rem;">🟡 Luz Amarilla: Con Cuidado y Verificación Obligatoria</h4>
+            <ul style="padding-left:1.25rem; font-size:0.88rem; color:#cbd5e1; line-height:1.6;">
+              <li>Resúmenes de textos largos: siempre debes leer el texto original para no perder matices.</li>
+              <li>Búsqueda de fechas, citas y fórmulas: corrobora siempre con tu libro o enciclopedia.</li>
+              <li>Corrección ortográfica y gramatical: revisa que no altere tu estilo ni tu intención comunicativa.</li>
+            </ul>
+          </div>
+          <div style="padding:1.25rem; border-radius:14px; background:rgba(244, 63, 94, 0.1); border:1px solid rgba(244, 63, 94, 0.35);">
+            <h4 style="color:#fb7185; font-family:'Outfit', sans-serif; margin-bottom:0.4rem;">🔴 Luz Roja: Práctica Prohibida y Deshonesta</h4>
+            <ul style="padding-left:1.25rem; font-size:0.88rem; color:#cbd5e1; line-height:1.6;">
+              <li>Generar ensayos o respuestas completas y entregarlas como producción propia.</li>
+              <li>Resolver exámenes evaluativos en línea delegando las respuestas a la máquina.</li>
+              <li>Subir datos personales confidenciales tuyos, de docentes o de compañeros de colegio.</li>
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderColabHTML() {
+      return `
+        <div style="display:flex; flex-direction:column; gap:1.2rem;">
+          <div class="mod-callout-box">
+            <h5 style="color:#38bdf8;">1. La Técnica Feynman en el Salón</h5>
+            <p>Elige un tema visto en clase y explícaselo a un compañero en 3 minutos sin utilizar apuntes ni teléfonos. Si te trabas o dudas en un punto, ese es tu verdadero vacío de aprendizaje.</p>
+          </div>
+          <div class="mod-callout-box">
+            <h5 style="color:#a855f7;">2. Debate de Posturas Contrapuestas</h5>
+            <p>Pídele a la IA que te presente los dos puntos de vista de un dilema histórico o ambiental de Colombia. Luego, debate en clase defendiendo una de las posturas con tus propios argumentos.</p>
+          </div>
+          <div class="mod-callout-box">
+            <h5 style="color:#34d399;">3. Sustentación Oral Ante Profesores</h5>
+            <p>La mejor defensa contra la sospecha de trampa con IA es tu capacidad de explicar verbalmente el procedimiento de tu tarea en 60 segundos con naturalidad.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderEditProfileHTML() {
+      const profile = readStoredJSON('studentProfile', {});
+      return `
+        <form onsubmit="handleSaveEditedProfile(event)">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Nombre Completo</label>
+              <input type="text" id="editName" class="form-control" value="${escapeHTML(profile.name || '')}" required>
+            </div>
+            <div class="form-group">
+              <label>¿Cómo te llamamos? (Apodo)</label>
+              <input type="text" id="editNickname" class="form-control" value="${escapeHTML(profile.nickname || '')}">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+            <div class="form-group">
+              <label>Colegio / Institución Educativa</label>
+              <input type="text" id="editSchool" class="form-control" value="${escapeHTML(profile.school || '')}" required>
+            </div>
+            <div class="form-group">
+              <label>Ciudad o Municipio</label>
+              <input type="text" id="editCity" class="form-control" value="${escapeHTML(profile.city || '')}" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Materia de Refuerzo Prioritaria</label>
+            <select id="editSubject" class="form-control">
+              <option value="Matemáticas y Álgebra" ${profile.subject === 'Matemáticas y Álgebra' ? 'selected' : ''}>📐 Matemáticas y Álgebra</option>
+              <option value="Español y Ensayos" ${profile.subject === 'Español y Ensayos' ? 'selected' : ''}>📖 Español y Ensayos</option>
+              <option value="Ciencias Naturales" ${profile.subject === 'Ciencias Naturales' ? 'selected' : ''}>🧪 Ciencias Naturales</option>
+              <option value="Sociales y Ciudadanas" ${profile.subject === 'Sociales y Ciudadanas' ? 'selected' : ''}>🏛️ Ciencias Sociales</option>
+              <option value="Inglés" ${profile.subject === 'Inglés' ? 'selected' : ''}>🗣️ Inglés</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp (Opcional tutoría)</label>
+            <input type="tel" id="editWhatsapp" class="form-control" value="${escapeHTML(profile.whatsapp || '')}">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%; padding:0.85rem; margin-top:0.5rem;">
+            💾 Guardar Cambios y Actualizar Mi Carné
+          </button>
+        </form>
+      `;
+    }
+
+    function handleSaveEditedProfile(e) {
+      e.preventDefault();
+      const current = readStoredJSON('studentProfile', {});
+      current.name = document.getElementById('editName').value.trim();
+      current.nickname = document.getElementById('editNickname').value.trim() || current.name.split(' ')[0];
+      current.school = document.getElementById('editSchool').value.trim();
+      current.city = document.getElementById('editCity').value.trim();
+      current.subject = document.getElementById('editSubject').value;
+      current.whatsapp = document.getElementById('editWhatsapp').value.trim();
+
+      localStorage.setItem('studentProfile', JSON.stringify(current));
+      closeToolModal();
+      initMenuPrincipal();
+      showToast('⚡ Perfil actualizado con éxito.');
+    }
+
+    // -------------------------------------------------------------
+    // CIERRE DE SESIÓN Y UTILIDADES
+    // -------------------------------------------------------------
     function logoutStudent() {
-      if (confirm('¿Deseas cerrar tu sesión en este dispositivo?')) {
+      if (confirm('¿Deseas cerrar tu sesión en este dispositivo? Tus progresos guardados permanecerán en tu navegador.')) {
         localStorage.removeItem('studentProfile');
         window.location.href = 'index.html';
       }
     }
 
-    window.addEventListener('DOMContentLoaded', initMenuPrincipal);
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    }
+
+    function escapeHTML(str) {
+      return String(str || '').replace(/[&<>'"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[c]));
+    }
+
+    // Manejador tecla Escape para cerrar modales
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModuleModal();
+        closeToolModal();
+      }
+    });
+
+    // -------------------------------------------------------------
+    // INICIALIZACIÓN
+    // -------------------------------------------------------------
+    window.addEventListener('DOMContentLoaded', () => {
+      initMenuPrincipal();
+
+      // Si viene con parámetro ?module=X, abrirlo inmediatamente
+      const params = new URLSearchParams(window.location.search);
+      const modParam = parseInt(params.get('module'), 10);
+      if (modParam >= 1 && modParam <= 6) {
+        selectModule(modParam);
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 {
-  "routes": [
-    { "src": "/(.*)", "dest": "/index.html" }
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/registro", "destination": "/registro.html" },
+    { "source": "/panel", "destination": "/panel.html" }
   ]
 }

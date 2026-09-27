@@ -16,7 +16,12 @@ const mime = {
 http.createServer((request, response) => {
   const requested = decodeURIComponent(request.url.split('?')[0]);
   const relative = requested === '/' ? '/index.html' : requested;
-  const filePath = path.resolve(root, '.' + relative);
+  let filePath = path.resolve(root, '.' + relative);
+
+  // Soporte de Clean URLs (ej: /panel -> /panel.html)
+  if (!fs.existsSync(filePath) && fs.existsSync(filePath + '.html')) {
+    filePath = filePath + '.html';
+  }
 
   if (
     !filePath.startsWith(root) ||
@@ -37,5 +42,5 @@ http.createServer((request, response) => {
   fs.createReadStream(filePath).pipe(response);
 
 }).listen(8080, '127.0.0.1', () => {
-  console.log('Volver a Aprender disponible en https://volver-a-aprender.web.app/');
+  console.log('Volver a Aprender servidor local activo en http://127.0.0.1:8080/');
 });
